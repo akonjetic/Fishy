@@ -1,245 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragment.HomeFragment"
-    android:background="@color/surface_surface_0">
+    android:background="@color/surface_surface_0"
+    tools:context=".fragment.HomeFragment">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/homeToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/homeToolbar"
-        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/color_primary"
+        android:elevation="1dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:elevation="1dp"
-        android:background="@color/color_primary">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/ic_goldfish_logo"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="176dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:fontFamily="@font/fishtail"
-            android:textSize="28sp"
-            android:text="Fishfolio"/>
+            <RelativeLayout
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/logoImg"
+                    android:src="@drawable/ic_goldfish_logo" />
+
+                <TextView
+                    android:layout_width="176dp"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/logoImg"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:fontFamily="@font/fishtail"
+                    android:text="Fishfolio"
+                    android:textSize="28sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/inputFieldSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/inputFieldSearchCardView"
+                    android:layout_width="296dp"
+                    android:layout_height="48dp"
+                    android:backgroundTint="@color/color_secondary"
+                    android:layout_marginVertical="8dp"
+                    app:cardCornerRadius="40dp">
+
+                    <ImageView
+                        android:id="@+id/inputFieldSearchIcon"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginVertical="10dp"
+                        android:layout_marginStart="16dp"
+                        app:tint="@color/color_secondary_dark"
+                        android:src="@drawable/ic_fishing_home" />
+
+                    <EditText
+                        android:id="@+id/inputFieldSearchText"
+                        android:layout_width="216dp"
+                        android:layout_height="20dp"
+                        android:layout_marginVertical="14dp"
+                        android:layout_marginStart="64dp"
+                        android:background="@android:color/transparent"
+                        android:hint="search"
+
+                         />
+
+
+                </androidx.cardview.widget.CardView>
+
+
+            </RelativeLayout>
+        </LinearLayout>
 
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/homeToolbar"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
-        android:padding="0dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/homeToolbar">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_scan_qr_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="16dp"
-            android:src="@drawable/ic_qrcode_home"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="parent"
-            app:fabSize="normal" />
-    <androidx.cardview.widget.CardView
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:id="@+id/scanQRCV"
-        xmlns:card_view="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/surface_surface_1"
-        app:cardElevation="0dp"
-        app:cardCornerRadius="8dp"
-        app:contentPadding="10dp"
-        card_view:cardUseCompatPadding="true"
-        android:layout_marginHorizontal="16dp">
-
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/qrCodeimg"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginVertical="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="16dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_qrcode_home"
-                android:tint="@color/color_primary_dark"
-                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize12dp" />
-
-            <TextView
-                android:layout_width="168dp"
-                android:layout_height="20dp"
-                android:id="@+id/scanrQrText"
-                android:text="scanqr"
-                android:layout_toEndOf="@id/qrCodeimg"
-                android:layout_centerVertical="true"/>
-
-        </RelativeLayout>
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:padding="0dp">
 
 
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        app:layout_constraintTop_toBottomOf="@id/scanQRCV"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:id="@+id/searchCV"
-        xmlns:card_view="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/surface_surface_1"
-        app:cardElevation="0dp"
-        app:cardCornerRadius="8dp"
-        app:contentPadding="10dp"
-        card_view:cardUseCompatPadding="true"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/searchImg"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginVertical="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="16dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_fishing_home"
-                android:tint="@color/color_primary_dark"
-                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize12dp" />
-
-            <TextView
-                android:layout_width="168dp"
-                android:layout_height="20dp"
-                android:id="@+id/searchText"
-                android:text="search"
-                android:layout_toEndOf="@id/searchImg"
-                android:layout_centerVertical="true"/>
-
-        </RelativeLayout>
-
-
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        app:layout_constraintTop_toBottomOf="@id/searchCV"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:id="@+id/fishOfTheDayCV"
-        xmlns:card_view="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/surface_surface_1"
-        app:cardElevation="0dp"
-        app:cardCornerRadius="8dp"
-        app:contentPadding="10dp"
-        card_view:cardUseCompatPadding="true"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/luckyFishImg"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginVertical="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="16dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_fishoftheday_home"
-                android:tint="@color/color_primary_dark"
-                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize12dp" />
-
-            <TextView
-                android:layout_width="168dp"
-                android:layout_height="20dp"
-                android:id="@+id/fishOfTheDayText"
-                android:text="fish of the day"
-                android:layout_toEndOf="@id/luckyFishImg"
-                android:layout_centerVertical="true"/>
-
-        </RelativeLayout>
-
-
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        app:layout_constraintTop_toBottomOf="@id/fishOfTheDayCV"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:id="@+id/recentCV"
-        xmlns:card_view="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/surface_surface_1"
-        app:cardElevation="0dp"
-        app:cardCornerRadius="8dp"
-        app:contentPadding="10dp"
-        card_view:cardUseCompatPadding="true"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/recentImg"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginVertical="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="16dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_recent_home"
-                android:tint="@color/color_primary_dark"
-                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize12dp" />
-
-            <TextView
-                android:layout_width="168dp"
-                android:layout_height="20dp"
-                android:id="@+id/recentText"
-                android:text="recent"
-                android:layout_toEndOf="@id/recentImg"
-                android:layout_centerVertical="true"/>
-
-        </RelativeLayout>
-
-
-
-    </androidx.cardview.widget.CardView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
 
