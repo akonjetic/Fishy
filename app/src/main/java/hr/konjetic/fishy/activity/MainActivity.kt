@@ -1,14 +1,23 @@
 package hr.konjetic.fishy.activity
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
+import android.graphics.Color
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.view.Window
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.zxing.integration.android.IntentIntegrator
 import hr.konjetic.fishy.R
 import hr.konjetic.fishy.databinding.ActivityMainBinding
 import hr.konjetic.fishy.fragment.AquariumFragment
 import hr.konjetic.fishy.fragment.FavoritesFragment
 import hr.konjetic.fishy.fragment.HomeFragment
 import hr.konjetic.fishy.fragment.SettingsFragment
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +29,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        supportActionBar?.hide()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         val homeFragment = HomeFragment()
         val aquariumFragment = AquariumFragment()
@@ -37,12 +49,38 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
+        val scanBtn = binding.fab
+        scanBtn.setOnClickListener {
+            val integrator = IntentIntegrator(this)
+            integrator.setCameraId(0)
+            integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
+            integrator.setCameraId(0)
+            integrator.setBeepEnabled(false)
+            integrator.initiateScan()
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window: Window = window
+            window.statusBarColor = ContextCompat.getColor(this, R.color.color_primary)
+            window.navigationBarColor = ContextCompat.getColor(this, R.color.color_primary)
+        }
     }
 
     private fun setCurrentFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.frameLayoutFragment, fragment)
             commit()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        if (result.contents != null) {
+            val url = result.contents
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
         }
     }
 }

@@ -38,11 +38,11 @@
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@id/logoImg"
                     android:layout_marginLeft="12dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="12dp"
                     android:layout_marginBottom="20dp"
-                    android:fontFamily="@font/fishtail"
+                    android:fontFamily="@font/amatic_bold"
                     android:text="Fishfolio"
-                    android:textSize="28sp" />
+                    android:textSize="36sp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -74,6 +74,7 @@
                         android:layout_marginVertical="14dp"
                         android:layout_marginStart="64dp"
                         android:background="@android:color/transparent"
+                        android:fontFamily="@font/amatic_bold"
                         android:hint="search"
 
                          />
