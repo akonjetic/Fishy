@@ -26,10 +26,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //binding view postavljanje
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
+        //skrivanje action bara u dark modeu i prisilni light mode
         supportActionBar?.hide()
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
@@ -40,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         setCurrentFragment(homeFragment)
 
+        //logika za šaltanje u bottom navigationu
         binding.bottomNavBar.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.ic_home -> setCurrentFragment(homeFragment)
@@ -50,6 +53,7 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+        //qr code scanner button i logika
         val scanBtn = binding.fab
         scanBtn.setOnClickListener {
             val integrator = IntentIntegrator(this)
@@ -60,6 +64,8 @@ class MainActivity : AppCompatActivity() {
             integrator.initiateScan()
         }
 
+
+        //status i navigacijski bar boje
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val window: Window = window
             window.statusBarColor = ContextCompat.getColor(this, R.color.color_primary)
@@ -67,6 +73,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //bottom nav logika
     private fun setCurrentFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.frameLayoutFragment, fragment)
@@ -74,6 +81,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //otvaranje linka koji je u qr-u
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
