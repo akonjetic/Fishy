@@ -3,12 +3,16 @@
     <item
         android:id="@+id/ic_home"
         android:icon="@drawable/ic_house_home"
-        android:title="TODO" />
+        android:title="HOME" />
 
     <item
         android:id="@+id/ic_aquarium"
         android:icon="@drawable/ic_aquarium_menu"
         android:title="TODO" />
+
+    <item
+        android:id="@+id/floatingButton"
+        android:title="" />
 
     <item
         android:id="@+id/ic_favorites"
