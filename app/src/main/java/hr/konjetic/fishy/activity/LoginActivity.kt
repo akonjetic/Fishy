@@ -7,19 +7,23 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Window
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import hr.konjetic.fishy.R
-import hr.konjetic.fishy.database.User
-import hr.konjetic.fishy.database.UserType
 import hr.konjetic.fishy.databinding.ActivityLoginBinding
 import hr.konjetic.fishy.databinding.ActivityLoginSignupBinding
-import hr.konjetic.fishy.databinding.ActivityMainBinding
+import hr.konjetic.fishy.network.model.User
+import hr.konjetic.fishy.network.model.UserPost
+import okhttp3.internal.wait
+
+const val ADMIN = 0
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var bindingSignup: ActivityLoginSignupBinding
+    private val viewModel : LoginActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +31,8 @@ class LoginActivity : AppCompatActivity() {
         //spremanje podataka o loginu
         val sharedPreferences = getSharedPreferences("my_app_preferences", Context.MODE_PRIVATE)
         val isLoggedIn = sharedPreferences.getBoolean("is_logged_in", false)
+        val isAdmin = sharedPreferences.getBoolean("is_admin", false)
+
 
         //binding view postavljanje
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -36,9 +42,14 @@ class LoginActivity : AppCompatActivity() {
         val viewSignup = bindingSignup.root
 
 
+
         //provjera jel već ulogiran
         if (isLoggedIn) {
-            redirectToMain()
+            if (isAdmin){
+                redirectToAdmin()
+            }else{
+                redirectToMain()
+            }
         } else {
             setContentView(view)
         }
@@ -47,14 +58,33 @@ class LoginActivity : AppCompatActivity() {
         supportActionBar?.hide()
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
+        //dohvaćanje User podataka s API
+        viewModel.getAllUsers()
+
+
         //login button
         binding.loginButton.setOnClickListener {
-            if (authenticateUser(email = binding.emailEt.text.toString(), password = binding.passET.text.toString()) != null){
-                val editor = sharedPreferences.edit()
-                editor.putBoolean("is_logged_in", true)
-                editor.apply()
 
-                redirectToMain()
+            if (authenticateUser(username = binding.emailEt.text.toString(), password = binding.passET.text.toString())){
+
+                if (checkIfAdmin(binding.emailEt.text.toString())){
+                    val editor = sharedPreferences.edit()
+                    editor.putBoolean("is_logged_in", true)
+                    editor.apply()
+                    editor.putBoolean("is_admin", true)
+                    editor.apply()
+
+                    redirectToAdmin()
+                } else{
+                    val editor = sharedPreferences.edit()
+                    editor.putBoolean("is_logged_in", true)
+                    editor.apply()
+                    editor.putBoolean("is_admin", false)
+                    editor.apply()
+
+                    redirectToMain()
+                }
+
             } else{
                 Toast.makeText(this, "No users found", Toast.LENGTH_SHORT).show()
             }
@@ -71,7 +101,36 @@ class LoginActivity : AppCompatActivity() {
             setContentView(view)
         }
 
+        //sign up lodgija
+        bindingSignup.button.setOnClickListener {
+            if (checkIfEmpty(username = bindingSignup.usernameET.text.toString(), email = bindingSignup.emailEt.text.toString(), password = bindingSignup.passET.text.toString())){
+                Toast.makeText(this, "All fields need to be entered.", Toast.LENGTH_SHORT).show()
+            } else if (checkIfUserExists(email = bindingSignup.emailEt.text.toString(), username = bindingSignup.usernameET.text.toString())){
+                Toast.makeText(this, "User with this Username or Email already exists.", Toast.LENGTH_SHORT).show()
+            } else if (!checkIfPasswordMatches(password = bindingSignup.passET.text.toString(), passwordConfirmed = bindingSignup.confirmPassEt.text.toString())){
+                Toast.makeText(this, "Passwords do not match.", Toast.LENGTH_SHORT).show()
+            } else{
+                Toast.makeText(this, "User created successfully.", Toast.LENGTH_SHORT).show()
 
+                val editor = sharedPreferences.edit()
+                editor.putBoolean("is_logged_in", true)
+                editor.apply()
+
+                viewModel.createNewUser(
+                    UserPost(
+                        email = bindingSignup.emailEt.text.toString(),
+                        username = bindingSignup.usernameET.text.toString(),
+                        userType = 1,
+                        password = bindingSignup.passET.text.toString()
+                    )
+                )
+
+                redirectToMain()
+            }
+        }
+
+
+        //status i navigacijska boja
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val window: Window = window
             window.statusBarColor = ContextCompat.getColor(this, R.color.color_primary)
@@ -80,13 +139,35 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+    //autentikacija
+    private fun authenticateUser(username: String, password: String): Boolean {
+        val existsUsername = viewModel.listOfUsers.value?.any{it.username == username}
+        if(existsUsername!!){
+            val user = viewModel.listOfUsers.value?.find { it.username == username }
+            if (user?.password == password){
+                return true
+            }
+            return false
+        }
+        return false
+    }
+
     //provjera je li postojeći user
-    private fun authenticateUser(email: String, password: String): User? {
-        val users = listOf(
-            User("anakonjetic@gmail.com", "ana123", UserType.BASIC),
-            User("admin@gmail.com", "admin123", UserType.ADMIN)
-        )
-        return users.find { it.email == email && it.password == password }
+    private fun checkIfUserExists(username: String, email:String) : Boolean{
+        val existsUsername = viewModel.listOfUsers.value?.any{it.username == username}
+        val existsEmail = viewModel.listOfUsers.value?.any{it.email == email}
+
+        return (existsEmail!! || existsUsername!!)
+    }
+
+    //podudaranje lozinki na sign up
+    private fun checkIfPasswordMatches(password: String, passwordConfirmed: String) : Boolean{
+        return password.equals(passwordConfirmed)
+    }
+
+    //popunjenost polja na sign up
+    private fun checkIfEmpty(username: String, email: String, password: String): Boolean{
+        return (username.isEmpty() || email.isEmpty() || password.isEmpty())
     }
 
     //preusmjeravanje u main screen
@@ -94,5 +175,21 @@ class LoginActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private fun redirectToAdmin() {
+        val intent = Intent(this, AdminActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    //usertype provjera - admin
+    private fun checkIfAdmin(username: String) : Boolean{
+        val existsUsername = viewModel.listOfUsers.value?.any{it.username == username}
+        if(existsUsername!!){
+            val user = viewModel.listOfUsers.value?.find { it.username == username }
+            return user?.userType == ADMIN
+        }
+        return false
     }
 }

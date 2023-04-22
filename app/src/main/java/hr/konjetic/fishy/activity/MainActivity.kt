@@ -1,7 +1,6 @@
 package hr.konjetic.fishy.activity
 
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -13,10 +12,10 @@ import androidx.fragment.app.Fragment
 import com.google.zxing.integration.android.IntentIntegrator
 import hr.konjetic.fishy.R
 import hr.konjetic.fishy.databinding.ActivityMainBinding
-import hr.konjetic.fishy.fragment.AquariumFragment
-import hr.konjetic.fishy.fragment.FavoritesFragment
-import hr.konjetic.fishy.fragment.HomeFragment
-import hr.konjetic.fishy.fragment.SettingsFragment
+import hr.konjetic.fishy.fragment.activityMain.AquariumFragment
+import hr.konjetic.fishy.fragment.activityMain.FavoritesFragment
+import hr.konjetic.fishy.fragment.activityMain.HomeFragment
+import hr.konjetic.fishy.fragment.activityMain.SettingsFragment
 
 
 class MainActivity : AppCompatActivity() {

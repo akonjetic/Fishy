@@ -33,4 +33,40 @@
 
     </style>
 
+    <style name="ButtonLabelErrorCenter">
+
+        <item name="android:gravity">center_horizontal</item>
+
+        <item name="android:fontFamily">sans-serif-medium</item>
+
+        <item name="android:textStyle">normal</item>
+
+        <item name="android:textSize">14sp</item>
+
+        <item name="android:letterSpacing">0.04</item>
+
+        <item name="android:lineSpacingExtra">6sp</item>
+
+        <item name="android:textColor">@color/status_error</item>
+
+    </style>
+
+    <style name="ButtonLabelOnSurfaceCenter">
+
+        <item name="android:gravity">center_horizontal</item>
+
+        <item name="android:fontFamily">sans-serif-medium</item>
+
+        <item name="android:textStyle">normal</item>
+
+        <item name="android:textSize">14sp</item>
+
+        <item name="android:letterSpacing">0.04</item>
+
+        <item name="android:lineSpacingExtra">6sp</item>
+
+        <item name="android:textColor">@color/on_color_on_color_primary</item>
+
+    </style>
+
 </resources>
