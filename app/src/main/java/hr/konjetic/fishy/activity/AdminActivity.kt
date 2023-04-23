@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import hr.konjetic.fishy.R
@@ -14,12 +16,19 @@ import hr.konjetic.fishy.databinding.ActivityMainBinding
 class AdminActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAdminBinding
+    private val viewModel : AdminActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityAdminBinding.inflate(layoutInflater)
         val view = binding.root
+
+        viewModel.getAllFishFamilies()
+        viewModel.getAllHabitats()
+        viewModel.getAllWaterTypes()
+
+
         setContentView(view)
 
         //tab layout setup

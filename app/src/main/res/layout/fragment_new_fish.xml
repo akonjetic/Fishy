@@ -1,14 +1,557 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="16dp"
     tools:context=".fragment.activityAdmin.NewFishFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/nameInput"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="16dp"
+                app:cardElevation="0dp"
+                app:contentPadding="0dp"
+                app:cardBackgroundColor="@color/surface_surface_2"
+                app:cardCornerRadius="4dp">
+
+                <TextView
+                    style="@style/AssistivePrimaryLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp"
+                    android:text="Fish Name"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginHorizontal="16dp"/>
+
+                <EditText
+                    android:id="@+id/NameET"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/color_primary"
+                    android:backgroundTint="@color/color_primary"
+                    android:fontFamily="@font/amatic_bold"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_marginHorizontal="16dp"/>
+
+
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/NameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Type Fish Name"
+                style="@style/AssistiveNLv2Left"
+                app:layout_constraintTop_toBottomOf="@id/nameInput"
+                android:layout_marginHorizontal="32dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/DescriptionInput"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintTop_toBottomOf="@id/NameText"
+                android:layout_marginTop="16dp"
+                app:cardElevation="0dp"
+                app:contentPadding="0dp"
+                app:cardBackgroundColor="@color/surface_surface_2"
+                app:cardCornerRadius="4dp">
+
+                <TextView
+                    style="@style/AssistivePrimaryLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp"
+                    android:text="Description"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginHorizontal="16dp"/>
+
+                <EditText
+                    android:id="@+id/descriptionET"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/color_primary"
+                    android:backgroundTint="@color/color_primary"
+                    android:fontFamily="@font/amatic_bold"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_marginHorizontal="16dp"/>
+
+
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/DescriptionText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Type Fish Description"
+                style="@style/AssistiveNLv2Left"
+                app:layout_constraintTop_toBottomOf="@id/DescriptionInput"
+                android:layout_marginHorizontal="32dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/WaterTypeInput"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintTop_toBottomOf="@id/DescriptionText"
+                android:layout_marginTop="16dp"
+                app:cardElevation="0dp"
+                app:contentPadding="0dp"
+                app:cardBackgroundColor="@color/surface_surface_2"
+                app:cardCornerRadius="4dp">
+
+                <TextView
+                    style="@style/AssistivePrimaryLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp"
+                    android:text="Water Type"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginHorizontal="16dp"/>
+
+                <Spinner
+                    android:id="@+id/waterTypeSelector"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:backgroundTint="@color/colorTransparent"
+                    android:popupBackground="@color/color_secondary"/>
+
+
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/WaterTypeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Choose Water Type"
+                style="@style/AssistiveNLv2Left"
+                app:layout_constraintTop_toBottomOf="@id/WaterTypeInput"
+                android:layout_marginHorizontal="32dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/FishFamilyInput"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintTop_toBottomOf="@id/WaterTypeText"
+                android:layout_marginTop="16dp"
+                app:cardElevation="0dp"
+                app:contentPadding="0dp"
+                app:cardBackgroundColor="@color/surface_surface_2"
+                app:cardCornerRadius="4dp">
+
+                <TextView
+                    style="@style/AssistivePrimaryLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp"
+                    android:text="Fish Family"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginHorizontal="16dp"/>
+
+                <Spinner
+                    android:id="@+id/FishFamilySelector"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:backgroundTint="@color/colorTransparent"
+                    android:popupBackground="@color/color_secondary"/>
+
+
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/FishFamilyText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Choose Fish Family"
+                style="@style/AssistiveNLv2Left"
+                app:layout_constraintTop_toBottomOf="@id/FishFamilyInput"
+                android:layout_marginHorizontal="32dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/HabitatInput"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintTop_toBottomOf="@id/FishFamilyText"
+                android:layout_marginTop="16dp"
+                app:cardElevation="0dp"
+                app:contentPadding="0dp"
+                app:cardBackgroundColor="@color/surface_surface_2"
+                app:cardCornerRadius="4dp">
+
+                <TextView
+                    style="@style/AssistivePrimaryLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp"
+                    android:text="Habitat"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginHorizontal="16dp"/>
+
+                <Spinner
+                    android:id="@+id/HabitatSelector"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:backgroundTint="@color/colorTransparent"
+                    android:popupBackground="@color/color_secondary"/>
+
+
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/HabitatText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Choose Habitat"
+                style="@style/AssistiveNLv2Left"
+                app:layout_constraintTop_toBottomOf="@id/HabitatInput"
+                android:layout_marginHorizontal="32dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/ImageInput"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintTop_toBottomOf="@id/HabitatText"
+                android:layout_marginTop="16dp"
+                app:cardElevation="0dp"
+                app:contentPadding="0dp"
+                app:cardBackgroundColor="@color/surface_surface_2"
+                app:cardCornerRadius="4dp">
+
+                <TextView
+                    style="@style/AssistivePrimaryLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp"
+                    android:text="Image"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginHorizontal="16dp"/>
+
+                <EditText
+                    android:id="@+id/ImageET"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/color_primary"
+                    android:textStyle="bold"
+                    android:backgroundTint="@color/color_primary"
+                    android:fontFamily="@font/amatic_bold"
+                    android:textSize="16sp"
+                    android:layout_marginHorizontal="16dp"/>
+
+
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/ImageText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Paste Image Url"
+                style="@style/AssistiveNLv2Left"
+                app:layout_constraintTop_toBottomOf="@id/ImageInput"
+                android:layout_marginHorizontal="32dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/MinSchoolSizeInput"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintTop_toBottomOf="@id/ImageText"
+                android:layout_marginTop="16dp"
+                app:cardElevation="0dp"
+                app:contentPadding="0dp"
+                app:cardBackgroundColor="@color/surface_surface_2"
+                app:cardCornerRadius="4dp">
+
+                <TextView
+                    style="@style/AssistivePrimaryLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp"
+                    android:text="Minimal School Size"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginHorizontal="16dp"/>
+
+                <EditText
+                    android:id="@+id/MinSchoolSizeET"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/color_primary"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/amatic_bold"
+                    android:textSize="16sp"
+                    android:backgroundTint="@color/color_primary"
+                    android:layout_marginHorizontal="16dp"/>
+
+
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/MinSchoolSizeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Type Minimal Fish School Size"
+                style="@style/AssistiveNLv2Left"
+                app:layout_constraintTop_toBottomOf="@id/MinSchoolSizeInput"
+                android:layout_marginHorizontal="32dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/AvgSchoolSizeInput"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintTop_toBottomOf="@id/MinSchoolSizeText"
+                android:layout_marginTop="16dp"
+                app:cardElevation="0dp"
+                app:contentPadding="0dp"
+                app:cardBackgroundColor="@color/surface_surface_2"
+                app:cardCornerRadius="4dp">
+
+                <TextView
+                    style="@style/AssistivePrimaryLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp"
+                    android:text="Average School Size"
+                    android:layout_marginTop="8dp"
+                    android:inputType="number"
+                    android:layout_marginHorizontal="16dp"/>
+
+                <EditText
+                    android:id="@+id/AvgSchoolSizeET"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:textColor="@color/color_primary"
+                    android:backgroundTint="@color/color_primary"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/amatic_bold"
+                    android:textSize="16sp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginHorizontal="16dp"/>
+
+
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/AvgSchoolSizeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Type Average Fish School Size"
+                style="@style/AssistiveNLv2Left"
+                app:layout_constraintTop_toBottomOf="@id/AvgSchoolSizeInput"
+                android:layout_marginHorizontal="32dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/MinAquariumSizeInput"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintTop_toBottomOf="@id/AvgSchoolSizeText"
+                android:layout_marginTop="16dp"
+                app:cardElevation="0dp"
+                app:contentPadding="0dp"
+                app:cardBackgroundColor="@color/surface_surface_2"
+                app:cardCornerRadius="4dp">
+
+                <TextView
+                    style="@style/AssistivePrimaryLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp"
+                    android:text="Minimal Aquarium Size"
+                    android:layout_marginTop="8dp"
+                    android:inputType="number"
+                    android:layout_marginHorizontal="16dp"/>
+
+                <EditText
+                    android:id="@+id/MinAquariumSizeET"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:textColor="@color/color_primary"
+                    android:backgroundTint="@color/color_primary"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/amatic_bold"
+                    android:textSize="16sp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginHorizontal="16dp"/>
+
+
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/MinAquariumSizeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Type Minimal Aquarium Size"
+                style="@style/AssistiveNLv2Left"
+                app:layout_constraintTop_toBottomOf="@id/MinAquariumSizeInput"
+                android:layout_marginHorizontal="32dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/GenderInput"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintTop_toBottomOf="@id/MinAquariumSizeText"
+                android:layout_marginTop="16dp"
+                app:cardElevation="0dp"
+                app:contentPadding="0dp"
+                app:cardBackgroundColor="@color/surface_surface_2"
+                app:cardCornerRadius="4dp">
+
+                <TextView
+                    style="@style/AssistivePrimaryLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp"
+                    android:text="Gender"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginHorizontal="16dp"/>
+
+                <Spinner
+                    android:id="@+id/GenderSelector"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:backgroundTint="@color/colorTransparent"
+                    android:popupBackground="@color/color_secondary"/>
+
+
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/GenderText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Choose Gender"
+                style="@style/AssistiveNLv2Left"
+                app:layout_constraintTop_toBottomOf="@id/GenderInput"
+                android:layout_marginHorizontal="32dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/MaxNumberOfSameGenderInput"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintTop_toBottomOf="@id/GenderText"
+                android:layout_marginTop="16dp"
+                app:cardElevation="0dp"
+                app:contentPadding="0dp"
+                app:cardBackgroundColor="@color/surface_surface_2"
+                app:cardCornerRadius="4dp">
+
+                <TextView
+                    style="@style/AssistivePrimaryLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp"
+                    android:text="Maximal Number of Same Gender"
+                    android:layout_marginTop="8dp"
+                    android:inputType="number"
+                    android:layout_marginHorizontal="16dp"/>
+
+                <EditText
+                    android:id="@+id/MaxNumberOfSameGenderET"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/color_primary"
+                    android:backgroundTint="@color/color_primary"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/amatic_bold"
+                    android:textSize="16sp"
+                    android:layout_marginHorizontal="16dp"/>
+
+
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/MaxNumberOfSameGenderText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Type Maximal Number of Same Gender in Tank"
+                style="@style/AssistiveNLv2Left"
+                app:layout_constraintTop_toBottomOf="@id/MaxNumberOfSameGenderInput"
+                android:layout_marginHorizontal="32dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/AvailabilityInput"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintTop_toBottomOf="@id/MaxNumberOfSameGenderText"
+                android:layout_marginTop="16dp"
+                app:cardElevation="0dp"
+                app:contentPadding="0dp"
+                app:cardBackgroundColor="@color/surface_surface_2"
+                app:cardCornerRadius="4dp">
+
+                <TextView
+                    style="@style/AssistivePrimaryLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp"
+                    android:text="Quantity"
+                    android:layout_marginTop="8dp"
+                    android:inputType="number"
+                    android:layout_marginHorizontal="16dp"/>
+
+                <EditText
+                    android:id="@+id/AvailabilityET"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:textColor="@color/color_primary"
+                    android:backgroundTint="@color/color_primary"
+                    android:fontFamily="@font/amatic_bold"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginHorizontal="16dp"/>
+
+
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/AvailabilityText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Type Store Quantity"
+                style="@style/AssistiveNLv2Left"
+                app:layout_constraintTop_toBottomOf="@id/AvailabilityInput"
+                android:layout_marginHorizontal="32dp"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/createNewFishButton"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                app:cardCornerRadius="5dp"
+                android:backgroundTint="@color/color_secondary"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/AvailabilityText"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Create New Fish"
+                    android:textSize="24sp"
+                    android:fontFamily="@font/amatic_bold"
+                    android:layout_gravity="center"
+                    android:textColor="@color/color_primary"
+                    />
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

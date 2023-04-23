@@ -11,9 +11,26 @@ interface FishyAPIService {
     @GET("api/fishfolio/users")
     suspend fun getAllUsers() : ArrayList<User>
 
-    @GET("api/fishfolio/{username}")
+    @GET("api/fishfolio/users/{username}")
     suspend fun getByUsername(@Path("username") username : String) : Response<User>
 
-    @POST("api/fishfolio")
+    @POST("api/fishfolio/users")
     suspend fun postUser(@Body userDTO: UserPost): Response<Unit>
+
+    @GET("api/fishfolio/fish")
+    suspend fun getAllFish() : ArrayList<Fish>
+
+    @POST("api/fishfolio/fish")
+    suspend fun postFish(@Body fishDTO: FishDTO): Response<Unit>
+
+    @GET("api/fishfolio/fish/habitat")
+    suspend fun getAllHabitats() : ArrayList<Habitat>
+
+    @GET("api/fishfolio/fish/fishfamily")
+    suspend fun getAllFishFamilies() : ArrayList<FishFamily>
+
+    @GET("api/fishfolio/fish/watertype")
+    suspend fun getAllWaterTypes() : ArrayList<WaterType>
+
+
 }
