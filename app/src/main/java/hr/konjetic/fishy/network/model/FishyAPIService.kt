@@ -26,7 +26,7 @@ interface FishyAPIService {
     @GET("api/fishfolio/fish/habitat")
     suspend fun getAllHabitats() : ArrayList<Habitat>
 
-    @GET("api/fishfolio/fish/fishfamily")
+    @GET("api/fishfolio/fish/fishfamilies")
     suspend fun getAllFishFamilies() : ArrayList<FishFamily>
 
     @GET("api/fishfolio/fish/watertype")

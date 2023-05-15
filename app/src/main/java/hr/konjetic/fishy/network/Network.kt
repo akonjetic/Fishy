@@ -14,7 +14,7 @@ import javax.net.ssl.X509TrustManager
 class Network {
 
     private val fishyAPIService: FishyAPIService
-    private val baseUrl = "http://10.6.145.104:5072/"
+    private val baseUrl = "http://192.168.0.126:5072/"
 
     init {
         val interceptor = HttpLoggingInterceptor()

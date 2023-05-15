@@ -7,6 +7,7 @@
         <entry key="..\:/FAKS/APSOLVENTSKA/Fishy/app/src/main/res/drawable/editable_selector.xml" value="0.216" />
         <entry key="..\:/FAKS/APSOLVENTSKA/Fishy/app/src/main/res/drawable/ic_aquarium_svgrepo_com.xml" value="0.293" />
         <entry key="..\:/FAKS/APSOLVENTSKA/Fishy/app/src/main/res/drawable/ic_baseline_games_24.xml" value="0.293" />
+        <entry key="..\:/FAKS/APSOLVENTSKA/Fishy/app/src/main/res/drawable/ic_fishoftheday_home.xml" value="0.21" />
         <entry key="..\:/FAKS/APSOLVENTSKA/Fishy/app/src/main/res/drawable/settings_clear_button_background.xml" value="0.21" />
         <entry key="..\:/FAKS/APSOLVENTSKA/Fishy/app/src/main/res/font/amatic_family.xml" value="0.4" />
         <entry key="..\:/FAKS/APSOLVENTSKA/Fishy/app/src/main/res/font/fishtail.xml" value="0.20462962962962963" />
@@ -17,6 +18,7 @@
         <entry key="..\:/FAKS/APSOLVENTSKA/Fishy/app/src/main/res/layout/activity_login3.xml" value="0.409375" />
         <entry key="..\:/FAKS/APSOLVENTSKA/Fishy/app/src/main/res/layout/activity_login_signup.xml" value="0.4" />
         <entry key="..\:/FAKS/APSOLVENTSKA/Fishy/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/FAKS/APSOLVENTSKA/Fishy/app/src/main/res/layout/fish_list_item.xml" value="0.21666666666666667" />
         <entry key="..\:/FAKS/APSOLVENTSKA/Fishy/app/src/main/res/layout/fragment_aquarium.xml" value="0.536" />
         <entry key="..\:/FAKS/APSOLVENTSKA/Fishy/app/src/main/res/layout/fragment_favorites.xml" value="0.19908814589665655" />
         <entry key="..\:/FAKS/APSOLVENTSKA/Fishy/app/src/main/res/layout/fragment_home.xml" value="0.30864197530864196" />
