@@ -32,5 +32,4 @@ interface FishyAPIService {
     @GET("api/fishfolio/fish/watertype")
     suspend fun getAllWaterTypes() : ArrayList<WaterType>
 
-
 }

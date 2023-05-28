@@ -5,13 +5,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.fragment.app.activityViewModels
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-import hr.konjetic.fishy.R
+import hr.konjetic.fishy.activity.viewmodel.AdminActivityViewModel
 import hr.konjetic.fishy.adapter.AdminActivityAdapter
 import hr.konjetic.fishy.databinding.ActivityAdminBinding
-import hr.konjetic.fishy.databinding.ActivityMainBinding
 
 class AdminActivity : AppCompatActivity() {
 

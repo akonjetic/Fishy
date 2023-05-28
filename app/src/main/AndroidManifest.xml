@@ -21,6 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Fishy">
         <activity
+            android:name=".activity.FishActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.AdminActivity"
             android:exported="false" />
         <activity
@@ -35,7 +38,7 @@
         </activity>
         <activity
             android:name=".activity.MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"

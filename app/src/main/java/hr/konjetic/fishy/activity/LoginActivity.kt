@@ -11,11 +11,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import hr.konjetic.fishy.R
+import hr.konjetic.fishy.activity.viewmodel.LoginActivityViewModel
 import hr.konjetic.fishy.databinding.ActivityLoginBinding
 import hr.konjetic.fishy.databinding.ActivityLoginSignupBinding
-import hr.konjetic.fishy.network.model.User
 import hr.konjetic.fishy.network.model.UserPost
-import okhttp3.internal.wait
 
 const val ADMIN = 0
 
@@ -81,6 +80,7 @@ class LoginActivity : AppCompatActivity() {
                     editor.apply()
                     editor.putBoolean("is_admin", false)
                     editor.apply()
+                    editor.putInt("user_id", getUserId(username = binding.emailEt.text.toString()))
 
                     redirectToMain()
                 }
@@ -181,6 +181,11 @@ class LoginActivity : AppCompatActivity() {
         val intent = Intent(this, AdminActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private fun getUserId(username: String) : Int{
+        val user = viewModel.listOfUsers.value?.find { it.username == username }
+        return user!!.id
     }
 
     //usertype provjera - admin

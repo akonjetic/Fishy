@@ -1,6 +1,5 @@
 package hr.konjetic.fishy.fragment.activityAdmin
 
-import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.text.InputType
@@ -12,18 +11,11 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import hr.konjetic.fishy.R
-import hr.konjetic.fishy.activity.AdminActivityViewModel
-import hr.konjetic.fishy.activity.LoginActivityViewModel
+import hr.konjetic.fishy.activity.viewmodel.AdminActivityViewModel
 import hr.konjetic.fishy.databinding.FragmentNewFishBinding
-import hr.konjetic.fishy.databinding.FragmentSettingsBinding
 import hr.konjetic.fishy.network.model.*
-import kotlinx.coroutines.launch
-import java.util.ArrayList
 
 
 class NewFishFragment : Fragment() {

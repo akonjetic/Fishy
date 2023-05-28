@@ -1,4 +1,4 @@
-package hr.konjetic.fishy.activity
+package hr.konjetic.fishy.activity.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
