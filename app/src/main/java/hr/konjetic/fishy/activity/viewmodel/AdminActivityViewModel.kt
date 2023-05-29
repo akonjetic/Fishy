@@ -7,12 +7,15 @@ import hr.konjetic.fishy.network.Network
 import hr.konjetic.fishy.network.model.*
 import kotlinx.coroutines.launch
 
+@Suppress("BlockingMethodInNonBlockingContext")
 class AdminActivityViewModel : ViewModel() {
 
     val listOfFish = MutableLiveData<ArrayList<Fish>>()
     val listOfFishFamilies = MutableLiveData<ArrayList<FishFamily>>()
     val listOfHabitats = MutableLiveData<ArrayList<Habitat>>()
     val listOfWaterTypes = MutableLiveData<ArrayList<WaterType>>()
+    val fish = MutableLiveData<Fish>()
+    val newFishId = MutableLiveData<String>()
 
     fun getAllFish(){
         viewModelScope.launch {
@@ -40,7 +43,21 @@ class AdminActivityViewModel : ViewModel() {
 
     fun createNewFish(data: FishDTO){
         viewModelScope.launch {
-            Network().getService().postFish(data)
+          val postFish = Network().getService().postFish(data)
+
+            if (postFish.isSuccessful){
+                newFishId.value = postFish.body()?.string()
+            }
+        }
+    }
+
+    fun getFishByName(name: String){
+        viewModelScope.launch {
+            val response = Network().getService().getFishByName(name)
+
+            if (response.isSuccessful){
+                fish.value = response.body()
+            }
         }
     }
 }

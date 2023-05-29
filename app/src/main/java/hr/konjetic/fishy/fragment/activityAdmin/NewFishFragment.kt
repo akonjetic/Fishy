@@ -1,6 +1,9 @@
 package hr.konjetic.fishy.fragment.activityAdmin
 
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.opengl.Visibility
 import android.os.Bundle
 import android.text.InputType
 import androidx.fragment.app.Fragment
@@ -12,6 +15,11 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import coil.load
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.WriterException
+import com.google.zxing.common.BitMatrix
+import com.google.zxing.qrcode.QRCodeWriter
 import hr.konjetic.fishy.R
 import hr.konjetic.fishy.activity.viewmodel.AdminActivityViewModel
 import hr.konjetic.fishy.databinding.FragmentNewFishBinding
@@ -185,6 +193,18 @@ class NewFishFragment : Fragment() {
 
             viewModel.createNewFish(newFish)
             Toast.makeText(requireContext(), "New Fish Created Successfully", Toast.LENGTH_SHORT).show()
+
+
+
+        }
+
+        viewModel.newFishId.observe(viewLifecycleOwner){
+            val fishId = it
+
+            val qrCodeBitmap = generateQRCode(fishId)
+            binding.qrCode.visibility = View.VISIBLE
+            binding.qrCode.load(qrCodeBitmap)
+
         }
 
         return binding.root
@@ -253,5 +273,27 @@ class NewFishFragment : Fragment() {
         )
         binding.GenderSelector.adapter = arrayAdapter
 
+    }
+
+    private fun generateQRCode(content: String): Bitmap {
+        val qrCodeWriter = QRCodeWriter()
+        try {
+            val bitMatrix: BitMatrix = qrCodeWriter.encode(content, BarcodeFormat.QR_CODE, 500, 500)
+            val width = bitMatrix.width
+            val height = bitMatrix.height
+            val pixels = IntArray(width * height)
+            for (y in 0 until height) {
+                val offset = y * width
+                for (x in 0 until width) {
+                    pixels[offset + x] = if (bitMatrix[x, y]) Color.BLACK else Color.WHITE
+                }
+            }
+            return Bitmap.createBitmap(pixels, width, height, Bitmap.Config.RGB_565)
+        } catch (e: WriterException) {
+            e.printStackTrace()
+            // Handle the exception as per your requirement
+        }
+        // Return a default blank bitmap if QR code generation fails
+        return Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565)
     }
 }

@@ -5,12 +5,16 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.Window
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.google.zxing.integration.android.IntentIntegrator
 import hr.konjetic.fishy.R
+import hr.konjetic.fishy.activity.viewmodel.AdminActivityViewModel
+import hr.konjetic.fishy.activity.viewmodel.MainActivityViewModel
 import hr.konjetic.fishy.databinding.ActivityMainBinding
 import hr.konjetic.fishy.fragment.activityMain.AquariumFragment
 import hr.konjetic.fishy.fragment.activityMain.FavoritesFragment
@@ -21,6 +25,7 @@ import hr.konjetic.fishy.fragment.activityMain.SettingsFragment
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val viewModel : MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +68,14 @@ class MainActivity : AppCompatActivity() {
             integrator.initiateScan()
         }
 
+        viewModel.scannedFish.observe(this){
+            val intent = Intent(this, FishActivity::class.java).apply {
+                putExtra(EXTRA_FISH, it)
+            }
+
+            startActivity(intent)
+        }
+
 
         //status i navigacijski bar boje
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -85,9 +98,7 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
         if (result.contents != null) {
-            val url = result.contents
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            startActivity(intent)
+            viewModel.getFishById(result.contents)
         }
     }
 }

@@ -20,10 +20,21 @@ class MainActivityViewModel : ViewModel() {
     val listOfHabitats = MutableLiveData<ArrayList<Habitat>>()
     val listOfWaterTypes = MutableLiveData<ArrayList<WaterType>>()
     val listOfFavoriteFish = MutableLiveData<ArrayList<FavoriteFish>>()
+    val scannedFish = MutableLiveData<Fish>()
 
     fun getAllFish() {
         viewModelScope.launch {
             listOfFish.value = Network().getService().getAllFish() as ArrayList<Fish>
+        }
+    }
+
+    fun getFishById(id: String){
+        viewModelScope.launch {
+            val response = Network().getService().getFishById(id.toInt())
+
+            if (response.isSuccessful){
+                scannedFish.value = response.body()
+            }
         }
     }
 

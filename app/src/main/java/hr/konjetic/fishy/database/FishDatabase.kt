@@ -4,12 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import hr.konjetic.fishy.database.entities.FavoriteFish
-import hr.konjetic.fishy.database.entities.FavoriteFishFamily
-import hr.konjetic.fishy.database.entities.FavoriteHabitat
-import hr.konjetic.fishy.database.entities.FavoriteWaterType
+import androidx.room.TypeConverters
+import hr.konjetic.fishy.database.entities.*
 
-@Database(entities = [FavoriteFish::class, FavoriteFishFamily::class, FavoriteWaterType::class, FavoriteHabitat::class], version = 2, exportSchema = false)
+@Database(entities = [FavoriteFish::class, FavoriteFishFamily::class, FavoriteWaterType::class, FavoriteHabitat::class, Aquarium::class, AquariumFish::class], version = 3, exportSchema = false)
+@TypeConverters(FishListConverter::class)
 abstract class FishDatabase : RoomDatabase() {
 
     abstract fun getFishDao(): FishDao

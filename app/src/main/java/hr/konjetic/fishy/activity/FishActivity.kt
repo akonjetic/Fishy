@@ -2,9 +2,12 @@ package hr.konjetic.fishy.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import coil.load
 import hr.konjetic.fishy.R
+import hr.konjetic.fishy.activity.viewmodel.AdminActivityViewModel
+import hr.konjetic.fishy.activity.viewmodel.FishActivityViewModel
 import hr.konjetic.fishy.databinding.ActivityFishBinding
 import hr.konjetic.fishy.network.model.Fish
 
@@ -14,6 +17,7 @@ const val EXTRA_FAVORITE = "FAVORITE"
 class FishActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFishBinding
+    private val viewModel : FishActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,5 +62,9 @@ class FishActivity : AppCompatActivity() {
         binding.fishFamily.type.text = "FISH FAMILY"
         binding.fishHabitat.type.text = "HABITAT"
         binding.fishImage.load(chosenFish.image)
+
+       /* binding.addToAquarium.setOnClickListener {
+            viewModel.addFishToAquarium(this, )
+        }*/
     }
 }
