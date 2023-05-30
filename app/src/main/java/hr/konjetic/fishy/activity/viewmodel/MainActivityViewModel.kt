@@ -5,12 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import hr.konjetic.fishy.database.FishDatabase
+import hr.konjetic.fishy.database.entities.Aquarium
 import hr.konjetic.fishy.database.entities.FavoriteFish
 import hr.konjetic.fishy.network.Network
-import hr.konjetic.fishy.network.model.Fish
-import hr.konjetic.fishy.network.model.FishFamily
-import hr.konjetic.fishy.network.model.Habitat
-import hr.konjetic.fishy.network.model.WaterType
+import hr.konjetic.fishy.network.model.*
 import kotlinx.coroutines.launch
 
 class MainActivityViewModel : ViewModel() {
@@ -21,6 +19,11 @@ class MainActivityViewModel : ViewModel() {
     val listOfWaterTypes = MutableLiveData<ArrayList<WaterType>>()
     val listOfFavoriteFish = MutableLiveData<ArrayList<FavoriteFish>>()
     val scannedFish = MutableLiveData<Fish>()
+    val aquarium1 = MutableLiveData<Aquarium>()
+    val aquarium2 = MutableLiveData<Aquarium>()
+    val aquarium3 = MutableLiveData<Aquarium>()
+    val compatibleList = MutableLiveData<ArrayList<FishFamilyCompatibility>>()
+    val incompatibleList = MutableLiveData<ArrayList<FishFamilyCompatibility>>()
 
     fun getAllFish() {
         viewModelScope.launch {
@@ -66,6 +69,28 @@ class MainActivityViewModel : ViewModel() {
 
     }
 
+   /* fun getAquariumOfUserById(context: Context, aquariumId: String, userId: Int){
+        viewModelScope.launch {
+            aquarium.value = FishDatabase.getDatabase(context)?.getFishDao()?.getAquariumsOfUserByAquariumId(
+                userId, aquariumId
+            )
+        }
+    }*/
+
+    fun getAllAquariumsOfUserById(context: Context, userId: Int){
+        viewModelScope.launch {
+            aquarium1.value = FishDatabase.getDatabase(context)?.getFishDao()?.getAquariumsOfUserByAquariumId(
+                userId, "FIRST"
+            )
+            aquarium2.value = FishDatabase.getDatabase(context)?.getFishDao()?.getAquariumsOfUserByAquariumId(
+                userId, "SECOND"
+            )
+            aquarium3.value = FishDatabase.getDatabase(context)?.getFishDao()?.getAquariumsOfUserByAquariumId(
+                userId, "THIRD"
+            )
+        }
+    }
+
     fun insertFavoriteFishToDatabase(context: Context, favoriteFish: FavoriteFish){
         viewModelScope.launch {
             FishDatabase.getDatabase(context)?.getFishDao()?.insertFavoriteFish(favoriteFish)
@@ -81,6 +106,18 @@ class MainActivityViewModel : ViewModel() {
     fun removeFavoriteFishFromDatabaseCascade(context: Context, id : Long, habitatId: Int, waterTypeId : Int, fishFamilyId: Int){
         viewModelScope.launch {
             FishDatabase.getDatabase(context)?.getFishDao()?.deleteFavoriteFishWithCascade(favFishId = id, habitatId = habitatId, waterTypeId = waterTypeId, fishFamilyId = fishFamilyId)
+        }
+    }
+
+    fun getAllFishFamilyCompatibleData(){
+        viewModelScope.launch {
+            compatibleList.value = Network().getService().getAllCompatibleData()
+        }
+    }
+
+    fun getAllFishFamilyIncompatibleData(){
+        viewModelScope.launch {
+            incompatibleList.value = Network().getService().getAllIncompatibleData()
         }
     }
 }

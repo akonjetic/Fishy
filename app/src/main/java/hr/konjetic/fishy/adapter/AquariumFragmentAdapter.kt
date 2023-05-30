@@ -19,7 +19,11 @@ class AquariumFragmentAdapter(private val context: Context, fm: FragmentManager)
     }
 
     override fun getItem(position: Int): Fragment {
-        return AquariumTabFragment()
+        return when(position) {
+            0 -> AquariumTabFragment(0)
+            1 -> AquariumTabFragment(1)
+            else -> AquariumTabFragment(2)
+        }
     }
 
     override fun getPageTitle(position: Int): CharSequence? {

@@ -4,11 +4,14 @@ import androidx.room.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import hr.konjetic.fishy.network.model.Fish
+import hr.konjetic.fishy.network.model.FishFamily
+import hr.konjetic.fishy.network.model.Habitat
+import hr.konjetic.fishy.network.model.WaterType
 import java.io.Serializable
 
 @Entity(tableName = "Aquarium")
 data class Aquarium (
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "aquariumId")
     val id: Long,
     @ColumnInfo(name = "aquariumUserId")
@@ -59,4 +62,9 @@ data class AquariumFish (
     val maxNumberOfSameGender: Int,
     @ColumnInfo(name = "aquariumFishStoreQuantity")
     val availableInStore: Int
-) : Serializable
+) : Serializable {
+    fun toFish() : Fish{
+        return Fish(id = fishId, name = name, description, waterType = WaterType(waterType.id, waterType.type), fishFamily = FishFamily(fishFamily.id, fishFamily.name), habitat = Habitat(habitat.id, habitat.name),
+        image, minSchoolSize, avgSchoolSize, MinAquariumSizeInL, gender, maxNumberOfSameGender, availableInStore)
+    }
+}

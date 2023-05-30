@@ -29,13 +29,22 @@ class AquariumFragment : Fragment() {
         val tabs : TabLayout = binding.tabLayout
         tabs.setupWithViewPager(viewPager)
 
-        tabs.setOnTabSelectedListener(object : OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                viewPager.currentItem = tab.position
+        tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                // Handle tab selection
+                val selectedTabPosition = tab?.position
+
+                viewPager.currentItem = selectedTabPosition!!
+                // Do something based on the selected tab position
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab) {}
-            override fun onTabReselected(tab: TabLayout.Tab) {}
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                // Handle tab unselection (optional)
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                // Handle tab reselection (optional)
+            }
         })
 
         return binding.root

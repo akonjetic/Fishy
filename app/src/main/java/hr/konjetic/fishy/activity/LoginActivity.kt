@@ -81,6 +81,7 @@ class LoginActivity : AppCompatActivity() {
                     editor.putBoolean("is_admin", false)
                     editor.apply()
                     editor.putInt("user_id", getUserId(username = binding.emailEt.text.toString()))
+                    editor.apply()
 
                     redirectToMain()
                 }
