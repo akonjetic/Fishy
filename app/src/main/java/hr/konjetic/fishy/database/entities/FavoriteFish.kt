@@ -9,7 +9,7 @@ import java.io.Serializable
 
 @Entity(tableName = "FavoriteFish")
 data class FavoriteFish (
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val id: Long,
     var userId: Int,
     val fishId: Int,

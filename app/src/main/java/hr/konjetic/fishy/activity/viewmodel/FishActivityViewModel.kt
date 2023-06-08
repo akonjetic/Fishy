@@ -73,4 +73,16 @@ class FishActivityViewModel : ViewModel(){
         }
     }
 
+    fun insertFavoriteFishToDatabase(context: Context, favoriteFish: FavoriteFish){
+        viewModelScope.launch {
+            FishDatabase.getDatabase(context)?.getFishDao()?.insertFavoriteFish(favoriteFish)
+        }
+    }
+
+    fun removeFavoriteFishFromDatabaseCascade(context: Context, id : Long, habitatId: Int, waterTypeId : Int, fishFamilyId: Int){
+        viewModelScope.launch {
+            FishDatabase.getDatabase(context)?.getFishDao()?.deleteFavoriteFishWithCascade(favFishId = id, habitatId = habitatId, waterTypeId = waterTypeId, fishFamilyId = fishFamilyId)
+        }
+    }
+
 }

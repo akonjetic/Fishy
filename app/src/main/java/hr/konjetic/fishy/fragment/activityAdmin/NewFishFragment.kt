@@ -1,10 +1,14 @@
 package hr.konjetic.fishy.fragment.activityAdmin
 
+import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.net.Uri
 import android.opengl.Visibility
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.InputType
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,7 +17,10 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.FileProvider
 import androidx.fragment.app.activityViewModels
 import coil.load
 import com.google.zxing.BarcodeFormat
@@ -24,6 +31,9 @@ import hr.konjetic.fishy.R
 import hr.konjetic.fishy.activity.viewmodel.AdminActivityViewModel
 import hr.konjetic.fishy.databinding.FragmentNewFishBinding
 import hr.konjetic.fishy.network.model.*
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 
 class NewFishFragment : Fragment() {
@@ -38,7 +48,6 @@ class NewFishFragment : Fragment() {
     ): View? {
 
         _binding = FragmentNewFishBinding.inflate(inflater, container, false)
-
 
 
         var waterType : WaterType? = null
@@ -173,43 +182,142 @@ class NewFishFragment : Fragment() {
 
 
         binding.createNewFishButton.setOnClickListener {
-            val newFish = FishDTO(
-                name = binding.NameET.text.toString(),
-                description = binding.descriptionET.text.toString(),
-                waterTypeId = waterType!!.id,
-                waterType = waterType!!,
-                fishFamilyId = fishFamily!!.id,
-                fishFamily = fishFamily!!,
-                habitat = habitat!!,
-                habitatId = habitat!!.id,
-                image = binding.ImageET.text.toString(),
-                minSchoolSize = binding.MinSchoolSizeET.text.toString().toInt(),
-                avgSchoolSize = binding.AvgSchoolSizeET.text.toString().toInt(),
-                minAquariumSizeInL = binding.MinAquariumSizeET.text.toString().toInt(),
-                gender = gender!!,
-                maxNumberOfSameGender = binding.MaxNumberOfSameGenderET.text.toString().toInt(),
-                availableInStore = binding.AvailabilityET.text.toString().toInt()
-            )
+            if (!isFormValid()) {
+                Toast.makeText(
+                    requireContext(),
+                    "Please fill out all the fields.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                val newFish = FishDTO(
+                    name = binding.NameET.text.toString(),
+                    description = binding.descriptionET.text.toString(),
+                    waterTypeId = waterType!!.id,
+                    waterType = waterType!!,
+                    fishFamilyId = fishFamily!!.id,
+                    fishFamily = fishFamily!!,
+                    habitat = habitat!!,
+                    habitatId = habitat!!.id,
+                    image = binding.ImageET.text.toString(),
+                    minSchoolSize = binding.MinSchoolSizeET.text.toString().toInt(),
+                    avgSchoolSize = binding.AvgSchoolSizeET.text.toString().toInt(),
+                    minAquariumSizeInL = binding.MinAquariumSizeET.text.toString().toInt(),
+                    gender = gender!!,
+                    maxNumberOfSameGender = binding.MaxNumberOfSameGenderET.text.toString().toInt(),
+                    availableInStore = binding.AvailabilityET.text.toString().toInt()
+                )
 
-            viewModel.createNewFish(newFish)
-            Toast.makeText(requireContext(), "New Fish Created Successfully", Toast.LENGTH_SHORT).show()
+                viewModel.createNewFish(newFish)
+                Toast.makeText(
+                    requireContext(),
+                    "New Fish Created Successfully",
+                    Toast.LENGTH_SHORT
+                ).show()
 
 
+            }
 
-        }
+            viewModel.newFishId.observe(viewLifecycleOwner) {
+                val fishId = it
 
-        viewModel.newFishId.observe(viewLifecycleOwner){
-            val fishId = it
+                val qrCodeBitmap = generateQRCode(fishId)
+                showImageDialog(requireContext(), qrCodeBitmap, it)
+                clearOutFrom(binding)
 
-            val qrCodeBitmap = generateQRCode(fishId)
-            binding.qrCode.visibility = View.VISIBLE
-            binding.qrCode.load(qrCodeBitmap)
-
+            }
         }
 
         return binding.root
     }
 
+    private fun isFormValid(): Boolean {
+        val name = binding.NameET.text.toString().trim()
+        val description = binding.descriptionET.text.toString().trim()
+        val image = binding.ImageET.text.toString().trim()
+        val minSchoolSize = binding.MinSchoolSizeET.text.toString().trim()
+        val avgSchoolSize = binding.AvgSchoolSizeET.text.toString().trim()
+        val minAquariumSize = binding.MinAquariumSizeET.text.toString().trim()
+        val maxNumberOfSameGender = binding.MaxNumberOfSameGenderET.text.toString().trim()
+        val availability = binding.AvailabilityET.text.toString().trim()
+
+        return name.isNotEmpty() && description.isNotEmpty() && image.isNotEmpty() &&
+                minSchoolSize.isNotEmpty() && avgSchoolSize.isNotEmpty() && minAquariumSize.isNotEmpty() &&
+                maxNumberOfSameGender.isNotEmpty() && availability.isNotEmpty()
+    }
+
+    fun clearOutFrom(binding: FragmentNewFishBinding){
+        // Clear EditText fields
+        binding.NameET.text.clear()
+        binding.descriptionET.text.clear()
+        binding.ImageET.text.clear()
+        binding.MinSchoolSizeET.text.clear()
+        binding.AvgSchoolSizeET.text.clear()
+        binding.MinAquariumSizeET.text.clear()
+        binding.MaxNumberOfSameGenderET.text.clear()
+        binding.AvailabilityET.text.clear()
+
+        // Reset Spinners to default selection
+        binding.waterTypeSelector.setSelection(0)
+        binding.FishFamilySelector.setSelection(0)
+        binding.HabitatSelector.setSelection(0)
+        binding.GenderSelector.setSelection(0)
+    }
+
+    fun showImageDialog(context: Context, bitmap: Bitmap, fishId: String) {
+        val imageView = ImageView(context).apply {
+            setImageBitmap(bitmap)
+            scaleType = ImageView.ScaleType.CENTER_INSIDE
+            adjustViewBounds = true
+        }
+
+        AlertDialog.Builder(context)
+            .setTitle("New Fish QR Code")
+            .setView(imageView)
+            .setPositiveButton("Download") { _, _ ->
+                saveImageToGallery(context, bitmap, fishId)
+            }
+            .setNeutralButton("Cancel", null)
+            .show()
+    }
+
+    // Function to save the image to the gallery
+    fun saveImageToGallery(context: Context, bitmap: Bitmap, fishId: String) {
+        val filename = "qrCode_" + fishId + ".jpg"
+        val saveDir = File(context.getExternalFilesDir(null), "Images")
+        saveDir.mkdirs()
+
+        val file = File(saveDir, filename)
+        try {
+            FileOutputStream(file).use { out ->
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+                out.flush()
+            }
+
+            // Add the image to the gallery
+            MediaStore.Images.Media.insertImage(context.contentResolver, file.absolutePath, filename, null)
+            Toast.makeText(requireContext(), "QR Code Image saved to device successfully!", Toast.LENGTH_SHORT).show()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+    // Function to email the image
+
+
+    // Function to get the URI of the bitmap for sharing
+    fun getBitmapUri(context: Context, bitmap: Bitmap): Uri? {
+        val file = File(context.externalCacheDir, "image.jpg")
+        try {
+            FileOutputStream(file).use { out ->
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+                out.flush()
+            }
+            return Uri.fromFile(file)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return null
+    }
 
     fun setupSpinnerWT() {
 

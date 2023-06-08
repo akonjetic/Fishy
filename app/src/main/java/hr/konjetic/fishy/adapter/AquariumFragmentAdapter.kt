@@ -1,6 +1,7 @@
 package hr.konjetic.fishy.adapter
 
 import android.content.Context
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -19,12 +20,23 @@ class AquariumFragmentAdapter(private val context: Context, fm: FragmentManager)
     }
 
     override fun getItem(position: Int): Fragment {
-        return when(position) {
-            0 -> AquariumTabFragment(0)
-            1 -> AquariumTabFragment(1)
-            else -> AquariumTabFragment(2)
-        }
+        val fragment = AquariumTabFragment()
+        val args = Bundle()
+        args.putInt("position", position)
+        fragment.arguments = args
+        return fragment
     }
+
+    override fun getItemId(position: Int): Long {
+        // Return a unique identifier for each item
+        return position.toLong()
+    }
+
+    override fun getItemPosition(`object`: Any): Int {
+        // Return POSITION_NONE to force recreation of the Fragment
+        return POSITION_NONE
+    }
+
 
     override fun getPageTitle(position: Int): CharSequence? {
         return titles[position]

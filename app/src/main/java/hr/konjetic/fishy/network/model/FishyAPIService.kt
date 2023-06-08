@@ -21,8 +21,11 @@ interface FishyAPIService {
     @GET("api/fishfolio/fish")
     suspend fun getAllFish() : ArrayList<Fish>
 
+    @GET("api/fishfolio/fish")
+    suspend fun getAllFishPaging(@Query("page") page: Int, @Query("pageSize") pageSize : Int) : FishResponse
+
     @GET("api/fishfolio/fish/names/{name}")
-    suspend fun getFishByName(@Path("name") name : String) : Response<Fish>
+    suspend fun getFishByName(@Path("name") name : String) : ArrayList<Fish>
 
     @GET("api/fishfolio/fish/{id}")
     suspend fun getFishById(@Path("id") id : Int) : Response<Fish>
@@ -44,4 +47,5 @@ interface FishyAPIService {
 
     @GET("api/fishfolio/fish/fishfamily/incompatibility")
     suspend fun getAllIncompatibleData() : ArrayList<FishFamilyCompatibility>
+
 }

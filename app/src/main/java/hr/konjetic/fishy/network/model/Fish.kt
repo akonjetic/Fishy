@@ -1,10 +1,14 @@
 package hr.konjetic.fishy.network.model
 
-import hr.konjetic.fishy.database.entities.AquariumFish
-import hr.konjetic.fishy.database.entities.FavoriteFishFamily
-import hr.konjetic.fishy.database.entities.FavoriteHabitat
-import hr.konjetic.fishy.database.entities.FavoriteWaterType
+import hr.konjetic.fishy.database.entities.*
 import java.io.Serializable
+
+data class FishResponse(
+    val totalCount : Int,
+    val pageSize : Int,
+    val currentPage : Int,
+    val items: ArrayList<Fish>
+): Serializable
 
 data class Fish (
 val id: Int,
@@ -29,7 +33,7 @@ val availableInStore: Int
 
     fun toDBEWithQuantity(quantity: Int) : AquariumFish{
         return AquariumFish(fishId = id, name = name, description = description, waterType = FavoriteWaterType(waterType.id, waterType.type), fishFamily = FavoriteFishFamily(fishFamily.id, fishFamily.name), habitat = FavoriteHabitat(habitat.id, habitat.name),
-            image, minSchoolSize, avgSchoolSize, MinAquariumSizeInL, gender, maxNumberOfSameGender, availableInStore = quantity)
+            image, minSchoolSize, avgSchoolSize, MinAquariumSizeInL, gender, maxNumberOfSameGender, quantity = quantity)
     }
 
     fun toDTO() : FishDTO{

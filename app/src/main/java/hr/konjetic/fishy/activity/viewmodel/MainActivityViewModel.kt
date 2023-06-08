@@ -4,11 +4,19 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import hr.konjetic.fishy.database.FishDatabase
 import hr.konjetic.fishy.database.entities.Aquarium
 import hr.konjetic.fishy.database.entities.FavoriteFish
 import hr.konjetic.fishy.network.Network
 import hr.konjetic.fishy.network.model.*
+import hr.konjetic.fishy.network.paging.FishPagingSource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 
 class MainActivityViewModel : ViewModel() {
@@ -24,12 +32,26 @@ class MainActivityViewModel : ViewModel() {
     val aquarium3 = MutableLiveData<Aquarium>()
     val compatibleList = MutableLiveData<ArrayList<FishFamilyCompatibility>>()
     val incompatibleList = MutableLiveData<ArrayList<FishFamilyCompatibility>>()
+    var fishSearchResult = MutableLiveData<ArrayList<Fish>>()
 
     fun getAllFish() {
         viewModelScope.launch {
             listOfFish.value = Network().getService().getAllFish() as ArrayList<Fish>
         }
     }
+
+   /*val fishFlow = Pager(PagingConfig(pageSize = 5)){
+        FishPagingSource(Network().getService())
+    }.flow.cachedIn(viewModelScope)*/
+
+
+    fun refreshFishFlow(): Flow<PagingData<Fish>> {
+        val pager = Pager(PagingConfig(pageSize = 5)) {
+            FishPagingSource(Network().getService())
+        }
+        return pager.flow.cachedIn(viewModelScope)
+    }
+
 
     fun getFishById(id: String){
         viewModelScope.launch {
@@ -109,6 +131,12 @@ class MainActivityViewModel : ViewModel() {
         }
     }
 
+    fun removeFavoriteFishOfUserFromDatabaseCascade(context: Context, id : Int){
+        viewModelScope.launch {
+            FishDatabase.getDatabase(context)?.getFishDao()?.deleteFavoriteFishOfUserWithCascade(userId = id)
+        }
+    }
+
     fun getAllFishFamilyCompatibleData(){
         viewModelScope.launch {
             compatibleList.value = Network().getService().getAllCompatibleData()
@@ -118,6 +146,12 @@ class MainActivityViewModel : ViewModel() {
     fun getAllFishFamilyIncompatibleData(){
         viewModelScope.launch {
             incompatibleList.value = Network().getService().getAllIncompatibleData()
+        }
+    }
+
+    fun getFishByName(name: String){
+        viewModelScope.launch {
+            fishSearchResult.value = Network().getService().getFishByName(name)
         }
     }
 }

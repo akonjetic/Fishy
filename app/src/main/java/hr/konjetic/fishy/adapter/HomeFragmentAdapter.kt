@@ -19,19 +19,20 @@ import hr.konjetic.fishy.database.entities.FavoriteHabitat
 import hr.konjetic.fishy.database.entities.FavoriteWaterType
 import hr.konjetic.fishy.databinding.FishListItemBinding
 import hr.konjetic.fishy.databinding.FragmentFavoritesBinding
+import hr.konjetic.fishy.network.model.Fish
 import kotlinx.coroutines.runBlocking
 
-class FavoritesFragmentAdapter(
+class HomeFragmentAdapter(
     private val context: Context,
-    private val favoritesList: ArrayList<FavoriteFish>
-): RecyclerView.Adapter<FavoritesFragmentAdapter.FavoritesViewHolder>(){
+    private val favoritesList: ArrayList<Fish>
+): RecyclerView.Adapter<HomeFragmentAdapter.FavoritesViewHolder>(){
 
     class FavoritesViewHolder(view : View) : RecyclerView.ViewHolder(view){
         val binding = FishListItemBinding.bind(view)
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateFavorites(updatedList: ArrayList<FavoriteFish>){
+    fun updateFavorites(updatedList: ArrayList<Fish>){
         favoritesList.clear()
         favoritesList.addAll(updatedList)
 
@@ -44,39 +45,41 @@ class FavoritesFragmentAdapter(
     }
 
     override fun onBindViewHolder(holder: FavoritesViewHolder, position: Int) {
-
         val fish = favoritesList[position]
 
-        holder.binding.fishFavoriteIcon.isActivated = true
+        val sharedPreferences =
+            context.getSharedPreferences("my_app_preferences", Context.MODE_PRIVATE)
+        val userId = sharedPreferences.getInt("user_id", 1)
 
-        holder.binding.fishFavoriteIcon.setOnClickListener {
-            if (it.isActivated){
-                runBlocking {
-                    FishDatabase.getDatabase(context)?.getFishDao()?.deleteFavoriteFishWithCascade(favFishId = fish.fishId.toLong(), waterTypeId = fish.waterType.id, fishFamilyId = fish.fishFamily.id, habitatId = fish.habitat.id)
-                }
-                it.isActivated = false
-                updateFavorites(
-                    favoritesList.filter { data ->
-                        data.id != fish.id
-                    } as ArrayList<FavoriteFish>
-                )
-                notifyItemChanged(position)
-            } else{
-                runBlocking {
-                    FishDatabase.getDatabase(context)?.getFishDao()?.insertFavoriteFish(fish)
-                }
-                it.isActivated = true
-            }
+        runBlocking {
+            val favFish = FishDatabase.getDatabase(context)?.getFishDao()?.getFavoriteFishByUserAndFish(userId = userId, fishId = favoritesList[position].id)
+
+            holder.binding.fishFavoriteIcon.isActivated = favFish!!.isNotEmpty()
         }
-
 
         holder.binding.fishImage.load(favoritesList[position].image)
         holder.binding.fishFamilyName.text = favoritesList[position].fishFamily.name
         holder.binding.fishName.text = favoritesList[position].name
 
+        holder.binding.fishFavoriteIcon.setOnClickListener {
+            if (it.isActivated){
+                runBlocking {
+                    FishDatabase.getDatabase(context)?.getFishDao()?.deleteFavoriteFishWithCascade(favFishId = fish.id.toLong(), waterTypeId = fish.waterType.id, fishFamilyId = fish.fishFamily.id, habitatId = fish.habitat.id)
+                }
+                it.isActivated = false
+            } else{
+                runBlocking {
+                    FishDatabase.getDatabase(context)?.getFishDao()?.insertFavoriteFish(FavoriteFish(0, userId, fish.id, fish.name, fish.description, FavoriteWaterType(fish.waterType.id, fish.waterType.type),
+                        FavoriteFishFamily(fish.fishFamily.id, fish.fishFamily.name), FavoriteHabitat(fish.habitat.id, fish.habitat.name), fish.image, fish.minSchoolSize, fish.avgSchoolSize, fish.MinAquariumSizeInL,
+                    fish.gender, fish.maxNumberOfSameGender, fish.availableInStore))
+                }
+                it.isActivated = true
+            }
+        }
+
         holder.binding.root.setOnClickListener {
             val intent = Intent(context, FishActivity::class.java).apply {
-                putExtra(EXTRA_FISH, favoritesList[position].toFishResponseData())
+                putExtra(EXTRA_FISH, favoritesList[position])
                 putExtra(EXTRA_FAVORITE, holder.binding.fishFavoriteIcon.isActivated)
             }
 

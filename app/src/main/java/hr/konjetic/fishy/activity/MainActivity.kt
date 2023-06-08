@@ -40,8 +40,8 @@ class MainActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         val homeFragment = HomeFragment()
-        val aquariumFragment = AquariumFragment()
         val favoritesFragment = FavoritesFragment()
+        val aquariumFragment = AquariumFragment()
         val settingsFragment = SettingsFragment()
 
         setCurrentFragment(homeFragment)
@@ -100,5 +100,10 @@ class MainActivity : AppCompatActivity() {
         if (result.contents != null) {
             viewModel.getFishById(result.contents)
         }
+    }
+
+
+    companion object {
+        var editable = false
     }
 }

@@ -51,13 +51,5 @@ class AdminActivityViewModel : ViewModel() {
         }
     }
 
-    fun getFishByName(name: String){
-        viewModelScope.launch {
-            val response = Network().getService().getFishByName(name)
 
-            if (response.isSuccessful){
-                fish.value = response.body()
-            }
-        }
-    }
 }

@@ -34,7 +34,6 @@ class FavoritesFragment : Fragment() {
         viewModel.getFavoriteFish(requireContext(), sharedPreferences.getInt("user_id", 1))
 
         viewModel.listOfFavoriteFish.observe(viewLifecycleOwner){
-            if (it.isNotEmpty())
                 favoriteFishAdapter.updateFavorites(it)
 
         }
@@ -43,4 +42,13 @@ class FavoritesFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+
+        val sharedPreferences = requireContext().getSharedPreferences("my_app_preferences", Context.MODE_PRIVATE)
+        viewModel.getFavoriteFish(requireContext(), sharedPreferences.getInt("user_id", 1))
+
+        super.onResume()
+
+
+    }
 }

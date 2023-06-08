@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_primary"
     tools:context=".activity.FishActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -46,41 +47,41 @@
     </androidx.appcompat.widget.Toolbar>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginVertical="16dp"
-        android:padding="4dp"
         app:cardBackgroundColor="@color/color_secondary"
         app:cardCornerRadius="16dp"
-        android:layout_marginBottom="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/fishImage"
-                style="@style/ShapeAppearanceOverlay.App.CornerSize12dp"
-                android:layout_width="280dp"
-                android:layout_height="280dp"
+                android:layout_width="240dp"
+                android:layout_height="220dp"
                 android:layout_gravity="center"
                 android:layout_margin="4dp"
-                android:src="@drawable/ic_fishoftheday_home" />
+                android:src="@drawable/ic_fishoftheday_home"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize12dp"/>
 
             <androidx.core.widget.NestedScrollView
                 android:scrollbars="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="152dp">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="4dp"
                     android:orientation="vertical">
 
                     <include
@@ -88,61 +89,43 @@
                         layout="@layout/container_sub_detail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="4dp" />
+                        android:layout_marginHorizontal="4dp"
+                        android:layout_marginVertical="4dp"/>
 
                     <include
                         android:id="@+id/fishWaterType"
                         layout="@layout/container_sub_detail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginVertical="4dp"
                         android:layout_marginHorizontal="4dp" />
                     <include
                         android:id="@+id/fishFamily"
                         layout="@layout/container_sub_detail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginVertical="4dp"
                         android:layout_marginHorizontal="4dp" />
                     <include
                         android:id="@+id/fishHabitat"
                         layout="@layout/container_sub_detail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginVertical="4dp"
                         android:layout_marginHorizontal="4dp" />
                     <include
                         android:id="@+id/fishMinSchoolSize"
                         layout="@layout/container_sub_detail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="4dp" />
-                    <include
-                        android:id="@+id/fishAvgSchoolSize"
-                        layout="@layout/container_sub_detail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="4dp"
                         android:layout_marginHorizontal="4dp" />
                     <include
                         android:id="@+id/fishGender"
                         layout="@layout/container_sub_detail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="4dp" />
-                    <include
-                        android:id="@+id/fishMaxNumOfSameGender"
-                        layout="@layout/container_sub_detail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="4dp" />
-                    <include
-                        android:id="@+id/fishMinAquariumSizeL"
-                        layout="@layout/container_sub_detail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="4dp" />
-                    <include
-                        android:id="@+id/fishStoreQuantity"
-                        layout="@layout/container_sub_detail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="4dp"
                         android:layout_marginHorizontal="4dp" />
 
                 </LinearLayout>
@@ -161,7 +144,7 @@
         android:backgroundTint="@color/color_primary"
         android:tintMode="@color/color_secondary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"/>
 
 

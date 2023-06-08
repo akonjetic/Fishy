@@ -16,8 +16,11 @@ interface FishDao {
     @Delete
     suspend fun deleteFavoriteFish(favoriteFish: FavoriteFish)
 
-    @Query("DELETE FROM FavoriteFish WHERE id = :id")
+    @Query("DELETE FROM FavoriteFish WHERE fishId = :id")
     suspend fun deleteFavoriteFishById(id: Long)
+
+    @Query("DELETE FROM FavoriteFish WHERE userId = :id")
+    suspend fun deleteFavoriteFishByUserId(id: Int)
 
     @Query("DELETE FROM FavoriteHabitat WHERE habitatId = :id")
     suspend fun deleteFavoriteHabitatById(id: Int)
@@ -37,8 +40,22 @@ interface FishDao {
     @Query("SELECT * FROM FavoriteFish WHERE userId = :userId")
     suspend fun getFavoriteFishByUser(userId: Int) : List<FavoriteFish>
 
+    @Query("SELECT * FROM FavoriteFish WHERE userId = :userId and fishId = :fishId")
+    suspend fun getFavoriteFishByUserAndFish(userId: Int, fishId: Int) : List<FavoriteFish>
+
     @Update
     suspend fun updateAquarium(aquarium: Aquarium)
+
+    @Transaction
+    suspend fun deleteFavoriteFishOfUserWithCascade(userId: Int){
+        val fish = getFavoriteFishByUser(userId)
+        deleteFavoriteFishByUserId(userId)
+        for (fishy in fish){
+            deleteFavoriteHabitatById(fishy.habitat.id)
+            deleteFavoriteFishFamilyById(fishy.fishFamily.id)
+            deleteFavoriteWaterTypeById(fishy.waterType.id)
+        }
+    }
 
     @Transaction
     suspend fun deleteFavoriteFishWithCascade(favFishId : Long, waterTypeId : Int, habitatId : Int, fishFamilyId : Int){

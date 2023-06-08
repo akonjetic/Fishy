@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import hr.konjetic.fishy.database.entities.*
 
-@Database(entities = [FavoriteFish::class, FavoriteFishFamily::class, FavoriteWaterType::class, FavoriteHabitat::class, Aquarium::class, AquariumFish::class], version = 4, exportSchema = false)
+@Database(entities = [FavoriteFish::class, FavoriteFishFamily::class, FavoriteWaterType::class, FavoriteHabitat::class, Aquarium::class, AquariumFish::class], version = 5, exportSchema = false)
 @TypeConverters(FishListConverter::class)
 abstract class FishDatabase : RoomDatabase() {
 

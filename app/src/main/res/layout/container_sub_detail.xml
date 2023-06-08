@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/surface_surface_1">
+    android:background="@drawable/fish_details_background"
+    >
 
     <TextView
         android:id="@+id/type"
@@ -29,16 +30,9 @@
         android:layout_marginHorizontal="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/type"
-        tools:text="BLABLABLA" />
+        tools:text="BLABLABLA"
+        android:paddingBottom="8dp"
+        android:paddingEnd="12dp"/>
 
-
-    <View
-        android:id="@+id/divider3"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintTop_toBottomOf="@id/value"
-        android:background="@color/neutrals_n_lv_3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
