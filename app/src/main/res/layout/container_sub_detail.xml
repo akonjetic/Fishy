@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/fish_details_background"
+    >
+
+    <TextView
+        android:id="@+id/type"
+        style="@style/AssistivePrimaryLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:textAllCaps="true"
+        android:textSize="20sp"
+        android:gravity="start"
+        android:layout_marginHorizontal="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="TESTESTEST" />
+
+    <TextView
+        android:id="@+id/value"
+        style="@style/AssistivePrimaryCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="start"
+        android:layout_marginHorizontal="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/type"
+        android:textColor="@color/color_primary_dark"
+        tools:text="BLABLABLA"
+        android:textAllCaps="true"
+        android:paddingBottom="8dp"
+        android:paddingEnd="12dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

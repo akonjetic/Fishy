@@ -5,11 +5,11 @@
 
         <item name="android:gravity">center_horizontal</item>
 
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">@font/kalam_family</item>
 
         <item name="android:textStyle">normal</item>
 
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14sp</item>
 
         <item name="android:lineSpacingExtra">4sp</item>
 
@@ -30,6 +30,128 @@
         <item name="android:lineSpacingExtra">4sp</item>
 
         <item name="android:textColor">@color/black</item>
+
+    </style>
+
+    <style name="ButtonLabelErrorCenter">
+
+        <item name="android:gravity">center_horizontal</item>
+
+        <item name="android:fontFamily">sans-serif-medium</item>
+
+        <item name="android:textStyle">normal</item>
+
+        <item name="android:textSize">14sp</item>
+
+        <item name="android:letterSpacing">0.04</item>
+
+        <item name="android:lineSpacingExtra">6sp</item>
+
+        <item name="android:textColor">@color/status_error</item>
+
+    </style>
+
+    <style name="AssistivePrimaryLeft">
+
+        <item name="android:fontFamily">@font/fishtail_family</item>
+
+        <item name="android:textStyle">bold</item>
+
+        <item name="android:textSize">16sp</item>
+
+        <item name="android:lineSpacingExtra">4sp</item>
+
+        <item name="android:textColor">@color/color_primary</item>
+
+    </style>
+
+    <style name="AssistiveNLv2Left">
+
+        <item name="android:fontFamily">sans-serif-medium</item>
+
+        <item name="android:textStyle">normal</item>
+
+        <item name="android:textSize">12sp</item>
+
+        <item name="android:lineSpacingExtra">4sp</item>
+
+        <item name="android:textColor">@color/neutrals_n_lv_2</item>
+
+    </style>
+
+    <style name="HeadlineMediumOnColorLeft">
+
+        <item name="android:fontFamily">@font/amatic_bold</item>
+
+        <item name="android:textStyle">bold</item>
+
+        <item name="android:textSize">16sp</item>
+
+        <item name="android:lineSpacingExtra">4sp</item>
+
+        <item name="android:textColor">@color/color_primary</item>
+
+    </style>
+
+
+    <style name="BodyLargeNLv1Left">
+
+    <item name="android:fontFamily">@font/fishtail_family</item>
+
+    <item name="android:textStyle">bold</item>
+
+    <item name="android:textSize">20sp</item>
+
+    <item name="android:lineSpacingExtra">4sp</item>
+
+    <item name="android:textColor">@color/color_primary</item>
+
+    </style>
+
+    <style name="BodyLargeNLv2Left">
+
+        <item name="android:fontFamily">sans-serif</item>
+
+        <item name="android:textStyle">normal</item>
+
+        <item name="android:textSize">16sp</item>
+
+        <item name="android:lineSpacingExtra">4sp</item>
+
+        <item name="android:textColor">@color/neutrals_n_lv_2</item>
+
+    </style>
+
+
+    <style name="AssistiveNLv1Left">
+
+        <item name="android:fontFamily">sans-serif-medium</item>
+
+        <item name="android:textStyle">normal</item>
+
+        <item name="android:textSize">12sp</item>
+
+        <item name="android:lineSpacingExtra">4sp</item>
+
+        <item name="android:textColor">@color/neutrals_n_lv_1</item>
+
+    </style>
+
+    <style name="ButtonLabelOnSurfaceCenter">
+
+        <item name="android:gravity">center_horizontal</item>
+
+        <item name="android:fontFamily">sans-serif-medium</item>
+
+        <item name="android:textStyle">normal</item>
+
+        <item name="android:textSize">14sp</item>
+
+        <item name="android:letterSpacing">0.04</item>
+
+        <item name="android:lineSpacingExtra">6sp</item>
+
+        <item name="android:textColor">@color/on_color_on_color_primary</item>
 
     </style>
 
