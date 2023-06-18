@@ -20,27 +20,15 @@ val habitat: Habitat,
 val image: String,
 val minSchoolSize: Int,
 val avgSchoolSize: Int,
-val MinAquariumSizeInL: Int,
 val gender: String,
-val maxNumberOfSameGender: Int,
-val availableInStore: Int
+val maxNumberOfSameGender: Int
 ) : Serializable {
-
-    fun toDatabaseEntity() : AquariumFish{
-        return AquariumFish(fishId = id, name = name, description = description, waterType = FavoriteWaterType(waterType.id, waterType.type), fishFamily = FavoriteFishFamily(fishFamily.id, fishFamily.name), habitat = FavoriteHabitat(habitat.id, habitat.name),
-        image, minSchoolSize, avgSchoolSize, MinAquariumSizeInL, gender, maxNumberOfSameGender, availableInStore)
-    }
 
     fun toDBEWithQuantity(quantity: Int) : AquariumFish{
         return AquariumFish(fishId = id, name = name, description = description, waterType = FavoriteWaterType(waterType.id, waterType.type), fishFamily = FavoriteFishFamily(fishFamily.id, fishFamily.name), habitat = FavoriteHabitat(habitat.id, habitat.name),
-            image, minSchoolSize, avgSchoolSize, MinAquariumSizeInL, gender, maxNumberOfSameGender, quantity = quantity)
+            image, minSchoolSize, avgSchoolSize, gender, maxNumberOfSameGender, quantity = quantity)
     }
 
-    fun toDTO() : FishDTO{
-        return FishDTO(name = name, description= description, waterTypeId = waterType.id, waterType =  waterType, fishFamilyId = fishFamily.id, fishFamily =  fishFamily,
-            habitatId = habitat.id, habitat =  habitat, image =  image, minSchoolSize =  minSchoolSize, avgSchoolSize =  avgSchoolSize, minAquariumSizeInL =  MinAquariumSizeInL, gender =  gender,
-            maxNumberOfSameGender = maxNumberOfSameGender, availableInStore =  availableInStore)
-    }
 }
 
 data class FishFamily(
@@ -70,10 +58,8 @@ val habitat: Habitat,
 val image: String,
 val minSchoolSize: Int,
 val avgSchoolSize: Int,
-val minAquariumSizeInL: Int,
 val gender: String,
-val maxNumberOfSameGender: Int,
-val availableInStore: Int
+val maxNumberOfSameGender: Int
 ) : Serializable
 
 data class FishFamilyCompatibility(

@@ -2,7 +2,6 @@ package hr.konjetic.fishy.database.entities
 
 import androidx.room.Embedded
 import androidx.room.Entity
-import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 import hr.konjetic.fishy.network.model.*
 import java.io.Serializable
@@ -21,15 +20,13 @@ data class FavoriteFish (
     val image: String,
     val minSchoolSize: Int,
     val avgSchoolSize: Int,
-    val MinAquariumSizeInL: Int,
     val gender: String,
-    val maxNumberOfSameGender: Int,
-    val availableInStore: Int
+    val maxNumberOfSameGender: Int
 ) : Serializable{
 
     fun toFishResponseData(): Fish{
         return Fish(
-            fishId, name, description, waterType.mapToWaterTypeResponseData(), fishFamily.mapToFishFamilyResponseData(), habitat.mapToHabitatResponseData(), image, minSchoolSize, avgSchoolSize, MinAquariumSizeInL, gender, maxNumberOfSameGender, availableInStore
+            fishId, name, description, waterType.mapToWaterTypeResponseData(), fishFamily.mapToFishFamilyResponseData(), habitat.mapToHabitatResponseData(), image, minSchoolSize, avgSchoolSize, gender, maxNumberOfSameGender
         )
     }
 }

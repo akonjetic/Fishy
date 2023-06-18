@@ -54,8 +54,6 @@ data class AquariumFish (
     val minSchoolSize: Int,
     @ColumnInfo(name = "aquariumFishAvgSchoolSize")
     val avgSchoolSize: Int,
-    @ColumnInfo(name = "aquariumFishMinAquariumSizeL")
-    val MinAquariumSizeInL: Int,
     @ColumnInfo(name = "aquariumFishGender")
     val gender: String,
     @ColumnInfo(name = "aquariumFishMaxNumOfSameGender")
@@ -65,6 +63,6 @@ data class AquariumFish (
 ) : Serializable {
     fun toFish() : Fish{
         return Fish(id = fishId, name = name, description, waterType = WaterType(waterType.id, waterType.type), fishFamily = FishFamily(fishFamily.id, fishFamily.name), habitat = Habitat(habitat.id, habitat.name),
-        image, minSchoolSize, avgSchoolSize, MinAquariumSizeInL, gender, maxNumberOfSameGender, quantity)
+        image, minSchoolSize, avgSchoolSize, gender, maxNumberOfSameGender)
     }
 }

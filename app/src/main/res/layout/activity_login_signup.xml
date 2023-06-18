@@ -36,7 +36,7 @@
             style="@style/LoginTextInputInnerFieldStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Email"
+            android:hint="Email"
             android:fontFamily="@font/kalam_regular"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -61,8 +61,8 @@
             style="@style/LoginTextInputInnerFieldStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Username"
             android:fontFamily="@font/kalam_regular"
+            android:hint="Username"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 

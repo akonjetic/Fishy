@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -21,7 +20,6 @@ import hr.konjetic.fishy.adapter.AquariumTabFragmentAdapter
 import hr.konjetic.fishy.database.entities.Aquarium
 import hr.konjetic.fishy.database.entities.AquariumFish
 import hr.konjetic.fishy.databinding.FragmentAquariumTabBinding
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -88,24 +86,28 @@ class AquariumTabFragment() : Fragment() {
 
                 viewModel.aquarium1.observe(viewLifecycleOwner) {
 
-                    if (it == null) {
-                        binding.placeholder.visibility = View.VISIBLE
-                        binding.recyclerLayout.visibility = View.GONE
-                    } else if (it.fish.isNullOrEmpty()) {
-                        binding.placeholder.visibility = View.VISIBLE
-                        binding.recyclerLayout.visibility = View.GONE
-                        val rating = calculateRating(it.fish)
-                        binding.ratingHeader.ratingText.text =
-                            "Rating: ${String.format("%.2f", rating)}"
-                    } else {
-                        binding.placeholder.visibility = View.GONE
-                        binding.recyclerLayout.visibility = View.VISIBLE
-                        aquariumAdapter.updateFishAndAquarium(it.fish, it)
-                        val rating = calculateRating(it.fish)
-                        binding.ratingHeader.ratingText.text =
-                            "Rating: ${String.format("%.2f", rating)}"
-                        setRatingBackgroundColor(binding.ratingHeader.ratingText, rating)
+                    when {
+                        it == null -> {
+                            binding.placeholder.visibility = View.VISIBLE
+                            binding.recyclerLayout.visibility = View.GONE
+                        }
+                        it.fish.isNullOrEmpty() -> {
+                            binding.placeholder.visibility = View.VISIBLE
+                            binding.recyclerLayout.visibility = View.GONE
+                            val rating = calculateRating(it.fish)
+                            binding.ratingHeader.ratingText.text =
+                                "Rating: ${String.format("%.2f", rating)}"
+                        }
+                        else -> {
+                            binding.placeholder.visibility = View.GONE
+                            binding.recyclerLayout.visibility = View.VISIBLE
+                            aquariumAdapter.updateFishAndAquarium(it.fish, it)
+                            val rating = calculateRating(it.fish)
+                            binding.ratingHeader.ratingText.text =
+                                "Rating: ${String.format("%.2f", rating)}"
+                            setRatingBackgroundColor(binding.ratingHeader.ratingText, rating)
 
+                        }
                     }
                 }
             }
@@ -132,23 +134,27 @@ class AquariumTabFragment() : Fragment() {
                 binding.recyclerLayout.visibility = View.GONE
 
                 viewModel.aquarium2.observe(viewLifecycleOwner) {
-                    if (it == null) {
-                        binding.placeholder.visibility = View.VISIBLE
-                        binding.recyclerLayout.visibility = View.GONE
-                    } else if (it.fish.isNullOrEmpty()) {
-                        binding.placeholder.visibility = View.VISIBLE
-                        binding.recyclerLayout.visibility = View.GONE
-                        val rating = calculateRating(it.fish)
-                        binding.ratingHeader.ratingText.text =
-                            "Rating: ${String.format("%.2f", rating)}"
-                    } else {
-                        binding.placeholder.visibility = View.GONE
-                        binding.recyclerLayout.visibility = View.VISIBLE
-                        aquariumAdapter.updateFishAndAquarium(it.fish, it)
-                        val rating = calculateRating(it.fish)
-                        binding.ratingHeader.ratingText.text =
-                            "Rating: ${String.format("%.2f", rating)}"
-                        setRatingBackgroundColor(binding.ratingHeader.ratingText, rating)
+                    when {
+                        it == null -> {
+                            binding.placeholder.visibility = View.VISIBLE
+                            binding.recyclerLayout.visibility = View.GONE
+                        }
+                        it.fish.isNullOrEmpty() -> {
+                            binding.placeholder.visibility = View.VISIBLE
+                            binding.recyclerLayout.visibility = View.GONE
+                            val rating = calculateRating(it.fish)
+                            binding.ratingHeader.ratingText.text =
+                                "Rating: ${String.format("%.2f", rating)}"
+                        }
+                        else -> {
+                            binding.placeholder.visibility = View.GONE
+                            binding.recyclerLayout.visibility = View.VISIBLE
+                            aquariumAdapter.updateFishAndAquarium(it.fish, it)
+                            val rating = calculateRating(it.fish)
+                            binding.ratingHeader.ratingText.text =
+                                "Rating: ${String.format("%.2f", rating)}"
+                            setRatingBackgroundColor(binding.ratingHeader.ratingText, rating)
+                        }
                     }
                 }
             }
@@ -176,23 +182,27 @@ class AquariumTabFragment() : Fragment() {
 
 
                 viewModel.aquarium3.observe(viewLifecycleOwner) {
-                    if (it == null) {
-                        binding.placeholder.visibility = View.VISIBLE
-                        binding.recyclerLayout.visibility = View.GONE
-                    } else if (it.fish.isNullOrEmpty()) {
-                        binding.placeholder.visibility = View.VISIBLE
-                        binding.recyclerLayout.visibility = View.GONE
-                        val rating = calculateRating(it.fish)
-                        binding.ratingHeader.ratingText.text =
-                            "Rating: ${String.format("%.2f", rating)}"
-                    } else {
-                        binding.placeholder.visibility = View.GONE
-                        binding.recyclerLayout.visibility = View.VISIBLE
-                        aquariumAdapter.updateFishAndAquarium(it.fish, it)
-                        val rating = calculateRating(it.fish)
-                        binding.ratingHeader.ratingText.text =
-                            "Rating: ${String.format("%.2f", rating)}"
-                        setRatingBackgroundColor(binding.ratingHeader.ratingText, rating)
+                    when {
+                        it == null -> {
+                            binding.placeholder.visibility = View.VISIBLE
+                            binding.recyclerLayout.visibility = View.GONE
+                        }
+                        it.fish.isNullOrEmpty() -> {
+                            binding.placeholder.visibility = View.VISIBLE
+                            binding.recyclerLayout.visibility = View.GONE
+                            val rating = calculateRating(it.fish)
+                            binding.ratingHeader.ratingText.text =
+                                "Rating: ${String.format("%.2f", rating)}"
+                        }
+                        else -> {
+                            binding.placeholder.visibility = View.GONE
+                            binding.recyclerLayout.visibility = View.VISIBLE
+                            aquariumAdapter.updateFishAndAquarium(it.fish, it)
+                            val rating = calculateRating(it.fish)
+                            binding.ratingHeader.ratingText.text =
+                                "Rating: ${String.format("%.2f", rating)}"
+                            setRatingBackgroundColor(binding.ratingHeader.ratingText, rating)
+                        }
                     }
                 }
             }
@@ -246,7 +256,7 @@ class AquariumTabFragment() : Fragment() {
             }
         }
 
-        for (fishy in fish) {
+        fish.forEach { fishy ->
             val anyOppositeWaterTypes = fish.any { f -> f.waterType.id != fishy.waterType.id }
 
             if (anyOppositeWaterTypes) {
@@ -312,7 +322,7 @@ class AquariumTabFragment() : Fragment() {
             reasons += (reason + "\n")
         }
 
-        reasonsText.text = reasons.toString()
+        reasonsText.text = reasons
 
         dialogBuilder.setView(dialogView)
         dialogBuilder.setTitle("Rating explanation:")
@@ -332,7 +342,6 @@ class AquariumTabFragment() : Fragment() {
             viewHolder: RecyclerView.ViewHolder,
             target: RecyclerView.ViewHolder
         ): Boolean {
-            // Not needed for swipe-to-delete functionality
             return false
         }
 
@@ -346,7 +355,7 @@ class AquariumTabFragment() : Fragment() {
         }
     }
 
-    fun setRatingBackgroundColor(textView: TextView, number: Double) {
+    private fun setRatingBackgroundColor(textView: TextView, number: Double) {
         val context = textView.context
         val backgroundColor = when {
             number > 9.5 -> ContextCompat.getColor(context, R.color.light_green)

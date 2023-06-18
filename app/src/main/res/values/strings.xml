@@ -11,4 +11,11 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="fish_activity_description">DESCRIPTION</string>
+    <string name="fish_activity_gender_unlimited">UNLIMITED</string>
+    <string name="fish_activity_max_num_gender">MAXIMUM NUMBER OF SAME GENDER PER SCHOOL</string>
+    <string name="fish_activity_school_size">MINIMAL/AVERAGE SCHOOL SIZE</string>
+    <string name="fish_activity_water_type">WATER TYPE</string>
+    <string name="fish_activity_fish_family">FISH FAMILY</string>
+    <string name="fish_activity_habitat">HABITAT</string>
 </resources>

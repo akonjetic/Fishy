@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:textAllCaps="true"
+        android:textSize="20sp"
         android:gravity="start"
         android:layout_marginHorizontal="8dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +31,9 @@
         android:layout_marginHorizontal="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/type"
+        android:textColor="@color/color_primary_dark"
         tools:text="BLABLABLA"
+        android:textAllCaps="true"
         android:paddingBottom="8dp"
         android:paddingEnd="12dp"/>
 

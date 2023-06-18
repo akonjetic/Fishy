@@ -1,11 +1,9 @@
 package hr.konjetic.fishy.adapter
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import hr.konjetic.fishy.fragment.activityMain.AquariumFragment
 import hr.konjetic.fishy.fragment.activityMain.AquariumTabFragment
 
 private val titles = arrayOf(
@@ -14,7 +12,7 @@ private val titles = arrayOf(
     "THIRD"
 )
 
-class AquariumFragmentAdapter(private val context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class AquariumFragmentAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     override fun getCount(): Int {
         return titles.size
     }
@@ -38,7 +36,7 @@ class AquariumFragmentAdapter(private val context: Context, fm: FragmentManager)
     }
 
 
-    override fun getPageTitle(position: Int): CharSequence? {
+    override fun getPageTitle(position: Int): CharSequence {
         return titles[position]
     }
 }

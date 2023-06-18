@@ -6,7 +6,6 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
-import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.Window
@@ -20,7 +19,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import coil.load
 import hr.konjetic.fishy.R
-import hr.konjetic.fishy.activity.viewmodel.AdminActivityViewModel
 import hr.konjetic.fishy.activity.viewmodel.FishActivityViewModel
 import hr.konjetic.fishy.database.entities.FavoriteFish
 import hr.konjetic.fishy.database.entities.FavoriteFishFamily
@@ -37,6 +35,7 @@ class FishActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFishBinding
     private val viewModel: FishActivityViewModel by viewModels()
 
+    @SuppressLint("ObsoleteSdkInt")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -54,26 +53,29 @@ class FishActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("my_app_preferences", Context.MODE_PRIVATE)
         val userId = sharedPreferences.getInt("user_id", 1)
 
-        binding.fishName.text = chosenFish.name
+        binding.fishName.text = "${chosenFish.name} (${chosenFish.gender})"
         binding.favoriteIcon.isActivated = isItFavorite
         binding.arrowBack.setOnClickListener {
             finish()
         }
 
         binding.fishDescription.value.text = chosenFish.description
-        binding.fishDescription.type.text = "DESCRIPTION"
-        binding.fishGender.value.text =
-            chosenFish.gender + " (" + chosenFish.maxNumberOfSameGender.toString() + ")"
-        binding.fishGender.type.text = "GENDER (MAXIMUM NUMBER OF SAME GENDER PER SCHOOL)"
+        binding.fishDescription.type.text = getString(R.string.fish_activity_description)
+        binding.fishGender.value.text = if (chosenFish.maxNumberOfSameGender > 0){
+            chosenFish.maxNumberOfSameGender.toString()
+        } else{
+            getString(R.string.fish_activity_gender_unlimited)
+        }
+        binding.fishGender.type.text = getString(R.string.fish_activity_max_num_gender)
         binding.fishMinSchoolSize.value.text =
-            chosenFish.minSchoolSize.toString() + " / " + chosenFish.avgSchoolSize.toString()
-        binding.fishMinSchoolSize.type.text = "MINIMAL/AVERAGE SCHOOL SIZE"
+            "${chosenFish.minSchoolSize} / ${chosenFish.avgSchoolSize}"
+        binding.fishMinSchoolSize.type.text = getString(R.string.fish_activity_school_size)
         binding.fishWaterType.value.text = chosenFish.waterType.type
         binding.fishFamily.value.text = chosenFish.fishFamily.name
         binding.fishHabitat.value.text = chosenFish.habitat.name
-        binding.fishWaterType.type.text = "WATER TYPE"
-        binding.fishFamily.type.text = "FISH FAMILY"
-        binding.fishHabitat.type.text = "HABITAT"
+        binding.fishWaterType.type.text = getString(R.string.fish_activity_water_type)
+        binding.fishFamily.type.text = getString(R.string.fish_activity_fish_family)
+        binding.fishHabitat.type.text = getString(R.string.fish_activity_habitat)
         binding.fishImage.load(chosenFish.image)
 
         binding.addToAquarium.setOnClickListener {
@@ -107,10 +109,8 @@ class FishActivity : AppCompatActivity() {
                         chosenFish.image,
                         chosenFish.minSchoolSize,
                         chosenFish.avgSchoolSize,
-                        chosenFish.MinAquariumSizeInL,
                         chosenFish.gender,
-                        chosenFish.maxNumberOfSameGender,
-                        chosenFish.availableInStore
+                        chosenFish.maxNumberOfSameGender
                     )
                 )
             }
@@ -133,7 +133,7 @@ class FishActivity : AppCompatActivity() {
         val spinner = dialogView.findViewById<Spinner>(R.id.spinner)
         val quantityET = dialogView.findViewById<EditText>(R.id.quantity)
 
-        var chosenQuantity: Int = 0
+        var chosenQuantity = 0
 
         viewModel.getAllAquariumsOfUser(this, userId)
 
@@ -157,10 +157,9 @@ class FishActivity : AppCompatActivity() {
 
         dialogBuilder.setView(dialogView)
         dialogBuilder.setTitle("Select an Aquarium")
-        dialogBuilder.setPositiveButton("OK") { dialog, whichButton ->
-            val selectedAquarium = spinner.selectedItemPosition
+        dialogBuilder.setPositiveButton("OK") { _, _ ->
 
-            val aquariumId = when (selectedAquarium) {
+            val aquariumId = when (spinner.selectedItemPosition) {
                 0 -> "FIRST"
                 1 -> "SECOND"
                 2 -> "THIRD"
@@ -195,7 +194,7 @@ class FishActivity : AppCompatActivity() {
 
 
         }
-        dialogBuilder.setNegativeButton("Cancel") { dialog, whichButton ->
+        dialogBuilder.setNegativeButton("Cancel") { dialog, _ ->
             dialog.dismiss()
         }
 

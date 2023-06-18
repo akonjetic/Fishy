@@ -8,19 +8,15 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import hr.konjetic.fishy.R
-import hr.konjetic.fishy.activity.EXTRA_FAVORITE
 import hr.konjetic.fishy.activity.EXTRA_FISH
 import hr.konjetic.fishy.activity.FishActivity
 import hr.konjetic.fishy.database.FishDatabase
 import hr.konjetic.fishy.database.entities.Aquarium
 import hr.konjetic.fishy.database.entities.AquariumFish
-import hr.konjetic.fishy.database.entities.FavoriteFish
 import hr.konjetic.fishy.databinding.FishListAquariumItemBinding
-import hr.konjetic.fishy.databinding.FishListItemBinding
 import kotlinx.coroutines.runBlocking
 
 class AquariumTabFragmentAdapter(
@@ -33,7 +29,7 @@ class AquariumTabFragmentAdapter(
         val binding = FishListAquariumItemBinding.bind(view)
     }
 
-    var editable = false
+    private var editable = false
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateFishAndAquarium(updated: ArrayList<AquariumFish>, aquarium : Aquarium){
@@ -56,10 +52,11 @@ class AquariumTabFragmentAdapter(
         return AquariumFishViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: AquariumFishViewHolder, @SuppressLint("RecyclerView") position: Int) {
         val currentFish = fishList[position]
 
-        holder.binding.fishName.text = currentFish.name
+        holder.binding.fishName.text = "${currentFish.name} (${currentFish.gender})"
         holder.binding.fishFamilyName.text = currentFish.fishFamily.name
         holder.binding.fishImage.load(currentFish.image)
 
@@ -105,6 +102,7 @@ class AquariumTabFragmentAdapter(
         return fishList.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun removeItem(position: Int){
         aquarium.fish.remove(fishList[position])
 

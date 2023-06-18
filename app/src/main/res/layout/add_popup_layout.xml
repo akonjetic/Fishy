@@ -8,7 +8,9 @@
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="4dp"
+        android:layout_marginBottom="16dp"/>
 
     <EditText
         android:id="@+id/quantity"
@@ -19,6 +21,10 @@
         android:imeOptions="actionNext"
         android:digits="0123456789"
         android:selectAllOnFocus="true"
+        android:layout_marginHorizontal="8dp"
+        android:textColor="@color/color_primary"
+        android:textColorHint="@color/color_primary"
+        android:fontFamily="@font/kalam_family"
         android:clickable="true"
         android:focusable="true" />
 </LinearLayout>

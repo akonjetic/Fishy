@@ -9,17 +9,8 @@ interface FishyAPIService {
     @GET("api/fishfolio/users")
     suspend fun getAllUsers() : ArrayList<User>
 
-    @GET("api/fishfolio/users/{username}")
-    suspend fun getByUsername(@Path("username") username : String) : Response<User>
-
     @POST("api/fishfolio/users")
     suspend fun postUser(@Body userDTO: UserPost): Response<Unit>
-
-    @PUT("api/fishfolio/fish/{id}")
-    suspend fun updateFish(@Body fishDTO: FishDTO, @Path("id") id: Int) : Response<Unit>
-
-    @GET("api/fishfolio/fish")
-    suspend fun getAllFish() : ArrayList<Fish>
 
     @GET("api/fishfolio/fish")
     suspend fun getAllFishPaging(@Query("page") page: Int, @Query("pageSize") pageSize : Int) : FishResponse
@@ -42,10 +33,10 @@ interface FishyAPIService {
     @GET("api/fishfolio/fish/watertype")
     suspend fun getAllWaterTypes() : ArrayList<WaterType>
 
-    @GET("api/fishfolio/fish/fishfamily/compatibility")
-    suspend fun getAllCompatibleData() : ArrayList<FishFamilyCompatibility>
-
     @GET("api/fishfolio/fish/fishfamily/incompatibility")
     suspend fun getAllIncompatibleData() : ArrayList<FishFamilyCompatibility>
+
+    @DELETE("api/fishfolio/fish/{id}")
+    suspend fun deleteFishById(@Path("id") id: Int) : Response<Unit>
 
 }

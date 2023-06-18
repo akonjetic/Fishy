@@ -39,12 +39,12 @@ class FishSearchAdapter(
 
     override fun onBindViewHolder(holder: FishSearchViewHolder, position: Int) {
         val fish = fishList[position]
-        holder.binding.searchFishName.text = fish.name
+        holder.binding.searchFishName.text = "${fish.name} (${fish.gender})"
 
 
         holder.binding.root.setOnClickListener {
 
-            var favorite = false
+            var favorite: Boolean
 
             val sharedPreferences =
                 context.getSharedPreferences("my_app_preferences", Context.MODE_PRIVATE)

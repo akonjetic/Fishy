@@ -1,5 +1,6 @@
 package hr.konjetic.fishy.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -30,6 +31,7 @@ class HomeFishPagingAdapter(private val context: Context, diffCallback: DiffUtil
         val binding = FishListItemBinding.bind(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: HomeFishViewHolder, position: Int) {
         val fish = getItem(position)!!
 
@@ -43,22 +45,23 @@ class HomeFishPagingAdapter(private val context: Context, diffCallback: DiffUtil
             holder.binding.fishFavoriteIcon.isActivated = favFish!!.isNotEmpty()
         }
 
-        holder.binding.fishImage.load(fish?.image)
-        holder.binding.fishFamilyName.text = fish?.fishFamily?.name
-        holder.binding.fishName.text = fish?.name
+        holder.binding.fishImage.load(fish.image)
+        holder.binding.fishFamilyName.text = fish.fishFamily.name
+        holder.binding.fishName.text = "${fish.name} (${fish.gender})"
 
         holder.binding.fishFavoriteIcon.setOnClickListener {
             if (it.isActivated){
                 runBlocking {
-                    FishDatabase.getDatabase(context)?.getFishDao()?.deleteFavoriteFishWithCascade(favFishId = fish?.id?.toLong()!!, waterTypeId = fish.waterType.id, fishFamilyId = fish.fishFamily.id, habitatId = fish.habitat.id)
+                    FishDatabase.getDatabase(context)?.getFishDao()?.deleteFavoriteFishWithCascade(favFishId = fish.id.toLong(), waterTypeId = fish.waterType.id, fishFamilyId = fish.fishFamily.id, habitatId = fish.habitat.id)
                 }
                 it.isActivated = false
             } else{
                 runBlocking {
                     FishDatabase.getDatabase(context)?.getFishDao()?.insertFavoriteFish(
-                        FavoriteFish(0, userId, fish.id!!, fish.name, fish.description, FavoriteWaterType(fish.waterType.id, fish.waterType.type),
-                        FavoriteFishFamily(fish.fishFamily.id, fish.fishFamily.name), FavoriteHabitat(fish.habitat.id, fish.habitat.name), fish.image, fish.minSchoolSize, fish.avgSchoolSize, fish.MinAquariumSizeInL,
-                        fish.gender, fish.maxNumberOfSameGender, fish.availableInStore)
+                        FavoriteFish(0, userId,
+                            fish.id, fish.name, fish.description, FavoriteWaterType(fish.waterType.id, fish.waterType.type),
+                        FavoriteFishFamily(fish.fishFamily.id, fish.fishFamily.name), FavoriteHabitat(fish.habitat.id, fish.habitat.name), fish.image, fish.minSchoolSize, fish.avgSchoolSize,
+                        fish.gender, fish.maxNumberOfSameGender)
                     )
                 }
                 it.isActivated = true
@@ -77,7 +80,7 @@ class HomeFishPagingAdapter(private val context: Context, diffCallback: DiffUtil
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeFishViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.fish_list_item, parent, false)
-        return HomeFishPagingAdapter.HomeFishViewHolder(view)
+        return HomeFishViewHolder(view)
     }
 
     }

@@ -26,6 +26,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:layout_marginBottom">8dp</item>
+        <item name="boxBackgroundColor">@android:color/transparent</item>
     </style>
 
     <style name="LoginTextInputInnerFieldStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -36,7 +37,10 @@
         <item name="android:maxLines">1</item>
         <item name="android:textSize">20sp</item>
         <item name="android:singleLine">true</item>
+        <item name="boxBackgroundMode">outline</item>
+        <item name="boxBackgroundColor">@android:color/transparent</item>
     </style>
+
 
 
     <style name="ShapeAppearanceOverlay.App.CornerSize12dp" parent="">

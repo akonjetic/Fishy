@@ -50,25 +50,30 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="24dp"
-            android:text="About"
+            android:text="ABOUT"
             android:layout_marginHorizontal="16dp"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Super cool Završni rad"
+            android:text="Završni rad - Fishfolio Android App"
             android:layout_marginTop="32dp"
             android:layout_marginHorizontal="16dp"/>
 
-        <TextView
-            android:id="@+id/moreInfoTV"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:text="Info Info"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="116dp"/>
 
     </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/clearAquariumsButton"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:background="@drawable/settings_clear_button_background"
+        android:layout_marginHorizontal="16dp"
+        style="@style/ButtonLabelErrorCenter"
+        app:layout_constraintTop_toBottomOf="@id/aboutCV"
+        android:layout_marginTop="24dp"
+        android:padding="8dp"
+        android:text="CLEAR AQUARIUMS"/>
 
     <TextView
         android:id="@+id/clearFavoritesButton"
@@ -78,7 +83,7 @@
         android:layout_marginHorizontal="16dp"
         style="@style/ButtonLabelErrorCenter"
         app:layout_constraintTop_toBottomOf="@id/aboutCV"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:padding="8dp"
         android:text="CLEAR FAVORITES"/>
 

@@ -14,11 +14,7 @@ import hr.konjetic.fishy.activity.EXTRA_FISH
 import hr.konjetic.fishy.activity.FishActivity
 import hr.konjetic.fishy.database.FishDatabase
 import hr.konjetic.fishy.database.entities.FavoriteFish
-import hr.konjetic.fishy.database.entities.FavoriteFishFamily
-import hr.konjetic.fishy.database.entities.FavoriteHabitat
-import hr.konjetic.fishy.database.entities.FavoriteWaterType
 import hr.konjetic.fishy.databinding.FishListItemBinding
-import hr.konjetic.fishy.databinding.FragmentFavoritesBinding
 import kotlinx.coroutines.runBlocking
 
 class FavoritesFragmentAdapter(
@@ -43,6 +39,7 @@ class FavoritesFragmentAdapter(
         return FavoritesViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FavoritesViewHolder, position: Int) {
 
         val fish = favoritesList[position]
@@ -72,7 +69,7 @@ class FavoritesFragmentAdapter(
 
         holder.binding.fishImage.load(favoritesList[position].image)
         holder.binding.fishFamilyName.text = favoritesList[position].fishFamily.name
-        holder.binding.fishName.text = favoritesList[position].name
+        holder.binding.fishName.text = "${fish.name} (${fish.gender})"
 
         holder.binding.root.setOnClickListener {
             val intent = Intent(context, FishActivity::class.java).apply {

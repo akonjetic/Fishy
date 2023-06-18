@@ -16,6 +16,9 @@ interface FishDao {
     @Delete
     suspend fun deleteFavoriteFish(favoriteFish: FavoriteFish)
 
+    @Query("DELETE FROM Aquarium WHERE aquariumUserId = :id")
+    suspend fun deleteAquariumsByUser(id: Int)
+
     @Query("DELETE FROM FavoriteFish WHERE fishId = :id")
     suspend fun deleteFavoriteFishById(id: Long)
 

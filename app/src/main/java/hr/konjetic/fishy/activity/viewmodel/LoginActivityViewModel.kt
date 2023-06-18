@@ -11,27 +11,17 @@ import kotlinx.coroutines.launch
 class LoginActivityViewModel : ViewModel() {
 
     val listOfUsers = MutableLiveData<ArrayList<User>>()
-    val user = MutableLiveData<User>()
 
-    fun getAllUsers(){
+    fun getAllUsers() {
         viewModelScope.launch {
-            listOfUsers.value = Network().getService().getAllUsers() as ArrayList<User>
+            listOfUsers.value = Network().getService().getAllUsers()
         }
     }
 
-    fun createNewUser(data: UserPost){
+    fun createNewUser(data: UserPost) {
         viewModelScope.launch {
             Network().getService().postUser(data)
         }
     }
 
-    fun getUserByUsername(username : String){
-        viewModelScope.launch {
-            val response = Network().getService().getByUsername(username)
-
-            if (response.isSuccessful){
-                user.value = response.body()
-            }
-        }
-    }
 }

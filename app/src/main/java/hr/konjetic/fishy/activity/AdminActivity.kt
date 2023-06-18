@@ -10,8 +10,10 @@ import com.google.android.material.tabs.TabLayout
 import hr.konjetic.fishy.activity.viewmodel.AdminActivityViewModel
 import hr.konjetic.fishy.adapter.AdminActivityAdapter
 import hr.konjetic.fishy.databinding.ActivityAdminBinding
+import hr.konjetic.fishy.fragment.activityAdmin.ManageFishFragment
+import hr.konjetic.fishy.fragment.activityAdmin.NewFishFragment
 
-class AdminActivity : AppCompatActivity() {
+class AdminActivity : AppCompatActivity(), NewFishFragment.OnFishCreatedListener {
 
     private lateinit var binding: ActivityAdminBinding
     private val viewModel : AdminActivityViewModel by viewModels()
@@ -30,7 +32,7 @@ class AdminActivity : AppCompatActivity() {
         setContentView(view)
 
         //tab layout setup
-        val adminActivityAdapter = AdminActivityAdapter(this, supportFragmentManager)
+        val adminActivityAdapter = AdminActivityAdapter(supportFragmentManager)
         val viewPager: ViewPager = binding.viewPager
         viewPager.adapter = adminActivityAdapter
         val tabs: TabLayout = binding.tabLayout
@@ -53,5 +55,12 @@ class AdminActivity : AppCompatActivity() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    override fun onFishCreated() {
+        val manageFishFragment = supportFragmentManager.findFragmentByTag("manageFishFragment")
+        if (manageFishFragment is ManageFishFragment) {
+            manageFishFragment.refreshData()
+        }
     }
 }

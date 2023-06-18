@@ -1,5 +1,6 @@
 package hr.konjetic.fishy.activity
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -24,6 +25,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var bindingSignup: ActivityLoginSignupBinding
     private val viewModel : LoginActivityViewModel by viewModels()
 
+    @SuppressLint("ObsoleteSdkInt")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -63,13 +65,13 @@ class LoginActivity : AppCompatActivity() {
 
         //login button
         binding.loginButton.setOnClickListener {
+            val username = binding.emailEt.text.toString()
+            val password = binding.passET.text.toString()
+            if (authenticateUser(username = username, password = password)){
 
-            if (authenticateUser(username = binding.emailEt.text.toString(), password = binding.passET.text.toString())){
-
-                if (checkIfAdmin(binding.emailEt.text.toString())){
+                if (checkIfAdmin(username)){
                     val editor = sharedPreferences.edit()
                     editor.putBoolean("is_logged_in", true)
-                    editor.apply()
                     editor.putBoolean("is_admin", true)
                     editor.apply()
 
@@ -77,10 +79,8 @@ class LoginActivity : AppCompatActivity() {
                 } else{
                     val editor = sharedPreferences.edit()
                     editor.putBoolean("is_logged_in", true)
-                    editor.apply()
                     editor.putBoolean("is_admin", false)
-                    editor.apply()
-                    editor.putInt("user_id", getUserId(username = binding.emailEt.text.toString()))
+                    editor.putInt("user_id", getUserId(username))
                     editor.apply()
 
                     redirectToMain()
@@ -102,27 +102,33 @@ class LoginActivity : AppCompatActivity() {
             setContentView(view)
         }
 
-        //sign up lodgija
+        //sign up logina
         bindingSignup.button.setOnClickListener {
-            if (checkIfEmpty(username = bindingSignup.usernameET.text.toString(), email = bindingSignup.emailEt.text.toString(), password = bindingSignup.passET.text.toString())){
+            val username = bindingSignup.usernameET.text.toString()
+            val email = bindingSignup.emailEt.text.toString()
+            val password = bindingSignup.passET.text.toString()
+            val confirmPassword = bindingSignup.confirmPassEt.text.toString()
+
+            if (checkIfEmpty(username, email, password)) {
                 Toast.makeText(this, "All fields need to be entered.", Toast.LENGTH_SHORT).show()
-            } else if (checkIfUserExists(email = bindingSignup.emailEt.text.toString(), username = bindingSignup.usernameET.text.toString())){
+            } else if (checkIfUserExists(email, username)) {
                 Toast.makeText(this, "User with this Username or Email already exists.", Toast.LENGTH_SHORT).show()
-            } else if (!checkIfPasswordMatches(password = bindingSignup.passET.text.toString(), passwordConfirmed = bindingSignup.confirmPassEt.text.toString())){
+            } else if (!checkIfPasswordMatches(password, confirmPassword)) {
                 Toast.makeText(this, "Passwords do not match.", Toast.LENGTH_SHORT).show()
-            } else{
+            } else {
                 Toast.makeText(this, "User created successfully.", Toast.LENGTH_SHORT).show()
 
-                val editor = sharedPreferences.edit()
-                editor.putBoolean("is_logged_in", true)
+                val editor = sharedPreferences.edit().apply {
+                    putBoolean("is_logged_in", true)
+                }
                 editor.apply()
 
                 viewModel.createNewUser(
                     UserPost(
-                        email = bindingSignup.emailEt.text.toString(),
-                        username = bindingSignup.usernameET.text.toString(),
+                        email = email,
+                        username = username,
                         userType = 1,
-                        password = bindingSignup.passET.text.toString()
+                        password = password
                     )
                 )
 
@@ -142,15 +148,8 @@ class LoginActivity : AppCompatActivity() {
 
     //autentikacija
     private fun authenticateUser(username: String, password: String): Boolean {
-        val existsUsername = viewModel.listOfUsers.value?.any{it.username == username}
-        if(existsUsername!!){
-            val user = viewModel.listOfUsers.value?.find { it.username == username }
-            if (user?.password == password){
-                return true
-            }
-            return false
-        }
-        return false
+        val user = viewModel.listOfUsers.value?.find { it.username == username }
+        return user?.password == password
     }
 
     //provjera je li postojeći user
@@ -163,7 +162,7 @@ class LoginActivity : AppCompatActivity() {
 
     //podudaranje lozinki na sign up
     private fun checkIfPasswordMatches(password: String, passwordConfirmed: String) : Boolean{
-        return password.equals(passwordConfirmed)
+        return password == passwordConfirmed
     }
 
     //popunjenost polja na sign up
